@@ -1,0 +1,11 @@
+[user]
+	name = Benjamin Jones
+	email = bjones@galois.com
+[core]
+	editor = /usr/bin/vim
+[merge]
+	tool = vimdiff
+[github]
+	user = bjones-galois
+[push]
+	default = simple
