@@ -39,6 +39,8 @@ vmap <Leader>a: :Tabularize /:\zs<CR>
 " Indenting
 Bundle 'IndentAnything'
 Bundle 'scrooloose/syntastic'
+let g:syntastic_cpp_compiler_options = '-std=c++0x'
+let g:syntastic_cpp_include_dirs = [ $HOME . '/local/include' ]
 Bundle 'elliottt/haskell-indent'
 
 " Powerline config
@@ -50,7 +52,8 @@ set laststatus=2
 
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
-
+let g:LatexBox_viewer   = 'open -a Skim'
+let g:LatexBox_quickfix = 2  " open quickfix but cursor stays in current window
 """""""""""""""""""""""
 " POST BUNDLE OPTIONS "
 """""""""""""""""""""""
@@ -91,7 +94,7 @@ if has("spell")
 endif
 
 " Hint column 78
-set colorcolumn=78
+" set colorcolumn=78
 set textwidth=78
 
 " Highlight trailing space, and tab characters, toggle with <leader>-s
