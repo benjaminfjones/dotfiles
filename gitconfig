@@ -7,5 +7,3 @@
 	tool = vimdiff
 [github]
 	user = bjones-galois
-[push]
-	default = simple
