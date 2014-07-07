@@ -89,7 +89,9 @@ alias fn='find . -name $@'
 # Custom PATH additions
 export PATH=$HOME/.cabal/bin:$HOME/bin:/usr/local/bin:$PATH
 export MANPATH=/usr/local/share/man
+export LD_LIBRARY_PATH="$HOME/local/lib:$LD_LIBRARY_PATH"
 
+export UNISONLOCALHOSTNAME=omicron.galois.com
 
 ### OH _ MY _ ZSH ###
 

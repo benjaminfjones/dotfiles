@@ -10,7 +10,10 @@ highlight hsComment term=NONE ctermfg=cyan
 nmap <buffer> K <Nop>
 
 " Insert a separating line
-nmap <buffer> --l ^80i-<Esc>^llR<Space>
+nmap <buffer> --l ^72i-<Esc>^llR<Space>
+
+" Insert a FAT separating line
+nmap <buffer> --L ^72i-<Esc>yypO<Space>
 
 " Insert a Haddock comment
 nmap <buffer> --\| O--<Space>\|<Space>

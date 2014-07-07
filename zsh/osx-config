@@ -2,3 +2,7 @@
 
 alias ls='ls -hG'
 alias grep='grep --color=auto'
+
+# pass completions
+
+. /usr/local/share/zsh/site-functions
