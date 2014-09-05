@@ -1,12 +1,12 @@
 [user]
 	name = Benjamin Jones
-	email = bjones@galois.com
+	email = benjaminfjones@gmail.com
 [core]
 	editor = /usr/bin/vim
 [merge]
 	tool = vimdiff
 [github]
-	user = bjones-galois
+	user = benjaminfjones
 [push]
 	default = simple
 [alias]
