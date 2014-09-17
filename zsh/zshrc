@@ -137,3 +137,8 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 unsetopt correct
 unsetopt correct_all
+
+# local zshrc
+if [ -f $HOME/.zshrc_local ]; then
+    source $HOME/.zshrc_local
+fi
