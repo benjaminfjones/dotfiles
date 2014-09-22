@@ -27,8 +27,15 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'vim-scripts/vimwiki'
 Bundle 'samsonw/vim-task'
 Bundle 'vim-scripts/closetag.vim'
+Bundle 'rking/ag.vim'
 
-" Tabular
+" Vim Lion (good for quick alignment character aligning)
+" glip=
+" 3gLi(,
+" glip/-->
+Bundle 'tommcdo/vim-lion'
+
+" Tabular (better for code formatting)
 Bundle 'godlygeek/tabular'
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
