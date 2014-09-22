@@ -1,42 +1,55 @@
-#!/bin/sh
+#!/usr/bin/env zsh
+set -e
 
-## Functions
+###################
+## Helper Functions
 
 # $1 = short name
 # $2 = git clone url
 clone_home () {
-    echo "Installing $1"
-    cd $HOME
+    echo "Cloning $1..."
+    pushd $HOME > /dev/null
     if [ -d $HOME/.$1 ]; then
-        cd $HOME/.$1
+        pushd $HOME/.$1 > /dev/null
         git pull
+        popd > /dev/null
     else
         git clone $2 $HOME/.$1
     fi
+    popd > /dev/null
 }
 
+###################
+## Main
+
+REPO_DIR=$(cd $(dirname $0); pwd)
+echo "REPO_DIR = $REPO_DIR"
+
 ## Make sure the dotfiles repo is clean
-git reset --hard HEAD
-
-MK_DOT="ghci gitconfig tmux.conf vim/ zsh/ vim/vimrc zsh/zshrc"
-PWD=$(pwd)
-
-## Each step should cd to the directory it needs
+# be sure this is commented out during development!
+# git reset --hard HEAD
 
 # link dotfiles
+MK_DOT="ghci gitconfig tmux.conf vim zsh vim/vimrc zsh/zshrc"
+
 echo "Linking dotfiles"
-for file in $MK_DOT; do
-    BNAME=$(basename $file)
-    ln -b -s $PWD/$file $HOME/.$BNAME
+for file in $(echo $MK_DOT)
+do
+    dest="$HOME/.$(basename $file)"
+    if [ -f $dest ] || [ -d $dest ]; then
+        mv $dest $dest.OLD
+    elif [ -h $dest ]; then
+        rm $dest
+    fi
+    ln -s $REPO_DIR/$file $dest
 done
 
-# boot vim
-echo "Booting vim"
-cd $HOME/.vim
-./boot.sh
+echo "Booting vim..."
+pushd $HOME/.vim > /dev/null
+zsh boot.sh
+popd > /dev/null
 
-clone_home(oh-my-zsh, http://github.com/robbyrussell/oh-my-zsh.git)
+clone_home oh-my-zsh   http://github.com/robbyrussell/oh-my-zsh.git
+clone_home tmux-status http://github.com/benjaminfjones/tmux-status.git
 
-clone_home(tmux-status, http://github.com/benjaminfjones/tmux-status.git)
-
-echo "Done."
+echo "Done!"
