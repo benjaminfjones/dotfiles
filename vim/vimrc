@@ -27,7 +27,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'vim-scripts/vimwiki'
 Bundle 'samsonw/vim-task'
 Bundle 'vim-scripts/closetag.vim'
-Bundle 'rking/ag.vim'
+" Bundle 'rking/ag.vim'  " causing segfaults
 
 " Vim Lion (good for quick alignment character aligning)
 " glip=
@@ -133,6 +133,10 @@ inoremap <Right> <NOP>
 inoremap <Down>  <NOP>
 inoremap <Left>  <NOP>
 
+" Disable the help key
+nnoremap <F1> <Esc>
+inoremap <F1> <Esc>
+
 " Set F2 as the binding to toggle the paste mode
 set pastetoggle=<F2>
 
@@ -153,6 +157,9 @@ set shiftwidth=4
 :hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 :hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+" jk trick!
+inoremap jk <Esc>
 
 
 """""""""
