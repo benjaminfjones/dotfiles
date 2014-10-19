@@ -140,6 +140,12 @@ inoremap <F1> <Esc>
 " Set F2 as the binding to toggle the paste mode
 set pastetoggle=<F2>
 
+" Use F3 to toggle spelling
+nnoremap <F3> :set spell!<CR>
+
+" Swap files in one place
+set directory=$VIMHOME/swap
+
 " Disable the bell
 set noerrorbells
 set visualbell
