@@ -3,59 +3,57 @@
 """""""""""
 
 set nocompatible
-
-" Set the leader as ';' instead of '\\'
-let mapleader      = ";"
-let maplocalleader = ";"
-
+filetype off
 let $VIMHOME = $HOME . '/.vim'
 
 """""""""""
 " BUNDLES "
 """""""""""
 
-filetype off
-
-set rtp+=$VIMHOME/bundle/vundle/
-call vundle#rc($VIMHOME . '/bundle')
+set rtp+=$VIMHOME/bundle/Vundle.vim
+call vundle#begin()
 
 " Vundle
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
-" External packages
-Bundle 'tpope/vim-fugitive'
-Bundle 'vim-scripts/vimwiki'
-Bundle 'samsonw/vim-task'
-Bundle 'vim-scripts/closetag.vim'
-" Bundle 'rking/ag.vim'  " causing segfaults
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-scripts/vimwiki'
+Plugin 'samsonw/vim-task'
+Plugin 'vim-scripts/closetag.vim'
+" Plugin 'rking/ag.vim'  " causing segfaults
 
 " Vim Lion (good for quick alignment character aligning)
-" glip=
-" 3gLi(,
-" glip/-->
-Bundle 'tommcdo/vim-lion'
+"
+"     glip=
+"     3gLi(,
+"     glip/-->
+"     <visual>gl=
+"
+Plugin 'tommcdo/vim-lion'
 
 " Tabular (better for code formatting)
-Bundle 'godlygeek/tabular'
+Plugin 'godlygeek/tabular'
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
 nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,<CR>
+vmap <Leader>a, :Tabularize /,<CR>
 
 
 " Indenting
-Bundle 'IndentAnything'
-Bundle 'scrooloose/syntastic'
+Plugin 'IndentAnything'
+Plugin 'scrooloose/syntastic'
 let g:syntastic_cpp_compiler_options = '-std=c++0x'
 let g:syntastic_cpp_include_dirs = [ $HOME . '/local/include' ]
-Bundle 'elliottt/haskell-indent'
+Plugin 'elliottt/haskell-indent'
 
 " Powerline config
-Bundle 'Lokaltog/vim-powerline'
+Plugin 'Lokaltog/vim-powerline'
 set laststatus=2
 
 " ctrl-p
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
@@ -65,15 +63,29 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll)$',
     \ }
 
-" Bundle 'altercation/vim-colors-solarized'
+" Dash.vim  -- only works on OS X with Dash.app installed
+Plugin 'rizzatti/dash.vim'
+nmap <silent> <leader>d <Plug>DashSearch
+
+" Plugin 'altercation/vim-colors-solarized'
+Plugin 'junegunn/seoul256.vim'
 
 " LaTeX
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'LaTeX-Box-Team/LaTeX-Box'
 let g:LatexBox_viewer   = 'open -a Skim'
 let g:LatexBox_quickfix = 2  " open quickfix but cursor stays in current window
+
+" All Plugins must be added before the following line
+call vundle#end()
+filetype plugin indent on
+
 """""""""""""""""""""""
 " POST BUNDLE OPTIONS "
 """""""""""""""""""""""
+
+" Set the leader as ';' instead of '\\'
+let mapleader      = ";"
+let maplocalleader = ";"
 
 " Enable filetype detection
 filetype plugin indent on
@@ -125,7 +137,10 @@ set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
 " colors solarized
+colors seoul256
 set bg=dark
+" reset highlighting
+highlight Normal cterm=NONE ctermbg=NONE
 
 " Disable the arrow keys when in edit mode
 inoremap <Up>    <NOP>
@@ -167,14 +182,32 @@ set shiftwidth=4
 " jk trick!
 inoremap jk <Esc>
 
+" Tab/buffer navigation via elliott
+function! Next()
+    if tabpagenr('$') > 1
+        tabnext
+    else
+        bnext
+    endif
+endfunction
+
+function! Prev()
+    if tabpagenr('$') > 1
+        tabprevious
+    else
+        bprevious
+    endif
+endfunction
+
+nnoremap <C-n> :call Next()<Cr>
+nnoremap <C-p> :call Prev()<Cr>
+
 
 """""""""
 " macros
 """""""""
 
-let @h = "yypVr"
-let @q = "{!}fmt"
-let @w = ":%s/\\s+$//"
-let @p = ":w !pbcopy"
+let @h = "yypVr"       " create markdown style header below current line
+let @q = "{!}fmt"      " format current selection
 :nnoremap <Leader>w :%s/\s\+$//<CR>
 :nnoremap <Leader>p :w !pbcopy<CR><CR>
