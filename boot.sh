@@ -1,29 +1,16 @@
 #!/usr/bin/env zsh
 set -e
 
-###################
-## Helper Functions
-
-# $1 = short name
-# $2 = git clone url
-clone_home () {
-    echo "Cloning $1..."
-    pushd $HOME > /dev/null
-    if [ -d $HOME/.$1 ]; then
-        pushd $HOME/.$1 > /dev/null
-        git pull
-        popd > /dev/null
-    else
-        git clone $2 $HOME/.$1
-    fi
-    popd > /dev/null
-}
-
-###################
-## Main
-
+# get absolute path to dotfiles repo (assumed to be where this script lives,
+# but not neccessarily where it's being exec'd from)
 REPO_DIR=$(cd $(dirname $0); pwd)
-echo "REPO_DIR = $REPO_DIR"
+echo "dotfiles REPO_DIR = $REPO_DIR"
+
+# source utility functions
+. $REPO_DIR/util.sh
+
+#########
+## Main
 
 ## Make sure the dotfiles repo is clean
 # be sure this is commented out during development!
@@ -36,11 +23,14 @@ echo "Linking dotfiles"
 for file in $(echo $MK_DOT)
 do
     dest="$HOME/.$(basename $file)"
-    if [ -f $dest ] || [ -d $dest ]; then
-        mv $dest $dest.OLD
-    elif [ -h $dest ]; then
+    if [ -h $dest ]; then
+        echo "removing symlink $dest"
         rm $dest
+    elif [ -f $dest ] || [ -d $dest ]; then
+        echo "moving file/dir $dest to $dest.OLD"
+        mv $dest $dest.OLD
     fi
+    echo "linking $REPO_DIR/$file to $dest"
     ln -s $REPO_DIR/$file $dest
 done
 
