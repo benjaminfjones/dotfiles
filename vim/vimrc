@@ -43,10 +43,15 @@ vmap <Leader>a, :Tabularize /,<CR>
 
 " Indenting
 Plugin 'IndentAnything'
+Plugin 'elliottt/haskell-indent'
+
+" Syntax checking
 Plugin 'scrooloose/syntastic'
 let g:syntastic_cpp_compiler_options = '-std=c++0x'
 let g:syntastic_cpp_include_dirs = [ $HOME . '/local/include' ]
-Plugin 'elliottt/haskell-indent'
+let g:syntastic_haskell_hlint_args = '--cpp-define=HLINT'
+let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
+
 
 " Powerline config
 Plugin 'Lokaltog/vim-powerline'
