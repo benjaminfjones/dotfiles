@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ ! -d bundle/vundle ]; then
-    git clone https://github.com/gmarik/vundle.git bundle/vundle
+    git clone https://github.com/gmarik/Vundle.vim.git bundle/Vundle.vim
 else
     cd bundle/vundle
     git pull
