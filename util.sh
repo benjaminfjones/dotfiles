@@ -1,7 +1,6 @@
 #
 # Utility functions, meant to be source'd
 #
-set -eux
 
 # print error message $1 and exit 1
 fail ()
