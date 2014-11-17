@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [ ! -d bundle/vundle ]; then
+if [ ! -d bundle/Vundle.vim ]; then
     git clone https://github.com/gmarik/Vundle.vim.git bundle/Vundle.vim
 else
-    cd bundle/vundle
+    cd bundle/Vundle.vim
     git pull
 fi
 

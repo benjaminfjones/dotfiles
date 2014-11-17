@@ -2,14 +2,17 @@
 " GLOBALS "
 """""""""""
 
+let $VIMHOME = $HOME . '/.vim'
+
+" required for Vundle.vim
 set nocompatible
 filetype off
-let $VIMHOME = $HOME . '/.vim'
 
 """""""""""
 " BUNDLES "
 """""""""""
 
+" set the runtime path to include Vundle.vim and initialize
 set rtp+=$VIMHOME/bundle/Vundle.vim
 call vundle#begin()
 
