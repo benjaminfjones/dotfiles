@@ -50,8 +50,9 @@ Plugin 'elliottt/haskell-indent'
 
 " Syntax checking
 Plugin 'scrooloose/syntastic'
-let g:syntastic_cpp_compiler_options = '-std=c++0x'
-let g:syntastic_cpp_include_dirs = [ $HOME . '/local/include' ]
+" let g:syntastic_cpp_compiler_options = '-std=c++0x'
+" let g:syntastic_cpp_include_dirs = [ $HOME . '/local/include', '.' ]
+let g:syntastic_cpp_checkers = []
 let g:syntastic_haskell_hlint_args = '--cpp-define=HLINT'
 let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
 
@@ -85,6 +86,9 @@ let g:LatexBox_quickfix = 2  " open quickfix but cursor stays in current window
 
 " Rename all the files with :Ren
 Plugin 'renamer.vim'
+
+" SAL syntax
+Plugin 'sal-syntax'
 
 " All Plugins must be added before the following line
 call vundle#end()
