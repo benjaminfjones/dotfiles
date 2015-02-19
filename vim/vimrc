@@ -49,13 +49,8 @@ Plugin 'IndentAnything'
 Plugin 'elliottt/haskell-indent'
 
 " Syntax checking
-Plugin 'scrooloose/syntastic'
-" let g:syntastic_cpp_compiler_options = '-std=c++0x'
-" let g:syntastic_cpp_include_dirs = [ $HOME . '/local/include', '.' ]
-let g:syntastic_cpp_checkers = []
-let g:syntastic_haskell_hlint_args = '--cpp-define=HLINT'
-let g:syntastic_haskell_checkers = ['hdevtools', 'hlint']
-
+"   (disabled for now)
+" Plugin 'scrooloose/syntastic'
 
 " Powerline config
 Plugin 'Lokaltog/vim-powerline'
@@ -89,6 +84,10 @@ Plugin 'renamer.vim'
 
 " SAL syntax
 Plugin 'sal-syntax'
+
+" ghc-mod
+Plugin 'Shougo/vimproc'
+Plugin 'eagletmt/ghcmod-vim'
 
 " All Plugins must be added before the following line
 call vundle#end()
@@ -175,6 +174,9 @@ nnoremap <F3> :set spell!<CR>
 
 " Swap files in one place
 set directory=$VIMHOME/swap
+
+" Silencio make! with <Leader>m
+nnoremap <leader>m :silent make!\|redraw!\|cw<CR>
 
 " Disable the bell
 set noerrorbells
