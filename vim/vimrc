@@ -48,6 +48,9 @@ vmap <Leader>a, :Tabularize /,<CR>
 Plugin 'IndentAnything'
 Plugin 'elliottt/haskell-indent'
 
+" haskell-vim
+Plugin 'raichoo/haskell-vim'
+
 " Syntax checking
 "   (disabled for now)
 " Plugin 'scrooloose/syntastic'
