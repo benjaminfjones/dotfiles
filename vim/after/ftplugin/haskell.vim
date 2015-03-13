@@ -16,6 +16,6 @@ let &l:statusline = '%{empty(getqflist()) ? "[No Errors]" : "[Errors Found]"}' .
 " hotkeys
 nnoremap <Leader>t :GhcModType<CR>
 nnoremap <Leader>y :GhcModTypeClear<CR>
-nnoremap <Leader>c :GhcModCheck<CR>
-nnoremap <Leader>l :GhcModLint<CR>
+nnoremap <Leader>ck :GhcModCheck<CR>
+nnoremap <Leader>li :GhcModLint<CR>
 
