@@ -153,7 +153,10 @@ export MANPATH=/usr/share/man:/usr/local/share/man:$MANPATH
 ############################################################
 
 ## autojump (on OSX only)
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+BREW=$(which brew)
+if [ -n "$DARWIN" ] && [ -n "$BREW" ]; then
+    [[ -s $($BREW --prefix)/etc/profile.d/autojump.sh ]] && . $($BREW --prefix)/etc/profile.d/autojump.sh
+fi
 
 
 ############################################################
