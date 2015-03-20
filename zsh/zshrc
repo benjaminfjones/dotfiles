@@ -152,7 +152,7 @@ export PATH=$HOME/.cabal/bin:$PATH
 ############################################################
 
 ## autojump (on OSX only)
-BREW=$(which brew)
+BREW=$(which brew 2>/dev/null)
 if [ -n "$DARWIN" ] && [ -n "$BREW" ]; then
     [[ -s $($BREW --prefix)/etc/profile.d/autojump.sh ]] && . $($BREW --prefix)/etc/profile.d/autojump.sh
 fi
