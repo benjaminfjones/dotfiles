@@ -19,7 +19,11 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
-" Plugin 'vim-scripts/vimwiki'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+
+Plugin 'vimwiki/vimwiki'
 
 " Vim Lion (good for quick alignment character aligning)
 " e.g,
@@ -92,7 +96,6 @@ endif
 
 " All Plugins must be added before the following line
 call vundle#end()
-filetype plugin indent on
 
 """""""""""""""""""""""
 " POST BUNDLE OPTIONS "
