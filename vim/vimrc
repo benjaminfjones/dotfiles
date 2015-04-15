@@ -1,7 +1,6 @@
 """""""""""
 " GLOBALS "
 """""""""""
-
 let $VIMHOME = $HOME . '/.vim'
 
 " required for Vundle.vim
@@ -20,13 +19,14 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Plugin 'tpope/vim-fugitive'
-Plugin 'vim-scripts/vimwiki'
-Plugin 'samsonw/vim-task'
-Plugin 'vim-scripts/closetag.vim'
-" Plugin 'rking/ag.vim'  " causing segfaults
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+
+Plugin 'vimwiki/vimwiki'
 
 " Vim Lion (good for quick alignment character aligning)
-"
+" e.g,
 "     glip=
 "     3gLi(,
 "     glip/-->
@@ -46,18 +46,22 @@ vmap <Leader>a, :Tabularize /,<CR>
 
 " Indenting
 Plugin 'IndentAnything'
+
+" Trevor
 Plugin 'elliottt/haskell-indent'
+Plugin 'elliottt/vim-haskell'
 
-" haskell-vim
-Plugin 'raichoo/haskell-vim'
-
-" Syntax checking
-"   (disabled for now)
-" Plugin 'scrooloose/syntastic'
-
-" Powerline config
-Plugin 'Lokaltog/vim-powerline'
+" Airline
+Plugin 'bling/vim-airline'
 set laststatus=2
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_powerline_fonts = 1
+" Airline output for tmux
+Plugin 'edkolev/tmuxline.vim'
+let g:tmuxline_preset = 'powerline'
+let g:airline_theme = 'simple'
 
 " ctrl-p
 Plugin 'kien/ctrlp.vim'
@@ -69,10 +73,6 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|cabal\-sandbox)$|[\/]dist$',
     \ 'file': '\v\.(exe|so|dll)$',
     \ }
-
-" Dash.vim  -- only works on OS X with Dash.app installed
-Plugin 'rizzatti/dash.vim'
-nmap <silent> <leader>d <Plug>DashSearch
 
 " Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
@@ -86,15 +86,16 @@ let g:LatexBox_quickfix = 2  " open quickfix but cursor stays in current window
 Plugin 'renamer.vim'
 
 " SAL syntax
-Plugin 'sal-syntax'
+Plugin 'benjaminfjones/sal-syntax'
 
 " ghc-mod
-Plugin 'Shougo/vimproc'
-Plugin 'eagletmt/ghcmod-vim'
+if executable('ghc-mod')
+    Plugin 'Shougo/vimproc'
+    Plugin 'eagletmt/ghcmod-vim'
+endif
 
 " All Plugins must be added before the following line
 call vundle#end()
-filetype plugin indent on
 
 """""""""""""""""""""""
 " POST BUNDLE OPTIONS "
@@ -114,6 +115,12 @@ set backspace=indent,eol,start
 
 " Incremental searching
 set incsearch
+
+" ag the silver searcher integration
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s --nocolor -g ""'
+endif
 
 " Cursor context
 set scrolloff=3
