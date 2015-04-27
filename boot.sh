@@ -42,4 +42,10 @@ popd > /dev/null
 clone_home oh-my-zsh   http://github.com/robbyrussell/oh-my-zsh.git
 clone_home tmux-status http://github.com/benjaminfjones/tmux-status.git
 
-echo "Done!"
+echo
+echo "Installation done!"
+echo "Don't forget:"
+echo
+echo "  * chsh /bin/zsh"
+echo "  * cp gitconfig.example to ~/.gitconfig and edit"
+echo
