@@ -47,5 +47,5 @@ echo "Installation done!"
 echo "Don't forget:"
 echo
 echo "  * chsh /bin/zsh"
-echo "  * cp gitconfig.example to ~/.gitconfig and edit"
+echo "  * cp ./gitconfig.example to ./gitconfig and fill in details"
 echo
