@@ -89,6 +89,7 @@ Plugin 'renamer.vim'
 Plugin 'benjaminfjones/sal-syntax'
 
 " ghc-mod
+" key mappings in ~/.vim/after/ftplugin/haskell.vim
 if executable('ghc-mod')
     Plugin 'Shougo/vimproc'
     Plugin 'eagletmt/ghcmod-vim'
