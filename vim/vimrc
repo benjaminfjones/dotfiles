@@ -58,10 +58,10 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 let g:airline_powerline_fonts = 1
-" Airline output for tmux
-Plugin 'edkolev/tmuxline.vim'
-let g:tmuxline_preset = 'powerline'
 let g:airline_theme = 'simple'
+" Airline output for tmux
+" Plugin 'edkolev/tmuxline.vim'
+" let g:tmuxline_preset = 'powerline'
 
 " ctrl-p
 Plugin 'kien/ctrlp.vim'
