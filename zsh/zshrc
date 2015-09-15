@@ -18,7 +18,6 @@ fpath=($fpath ~/.zsh/functions)
 
 # emacs key bindings
 bindkey -e
-
 bindkey "^f" forward-word
 bindkey "^b" backward-word
 
@@ -30,9 +29,6 @@ spectrum
 promptinit
 
 export EDITOR=vim
-
-topit() { /usr/bin/top -p `pgrep $1` }
-vimfind() { find -name $1 -exec vim -p {} + }
 
 if [[ $TERM == "dumb" ]] ; then
   alias ls='ls --color=none'
@@ -100,11 +96,19 @@ source $ZSH/oh-my-zsh.sh
 ### Aliases
 ############################################################
 
+topit() { /usr/bin/top -p `pgrep $1` }
+vimfind() { find -name $1 -exec vim -p {} + }
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+alias fn='find . -name $@'
+
 # Aliases
-alias rm='rm -v'
-alias rmq='rm'  # quiet
-alias vim='vim -p'
-alias vi='vim -p'
+RM=$(which rm)
+alias rmq="$RM"    # quiet
+alias rm="$RM -v"  # print deleted files
+
+VIM=$(which VIM)
+alias vim="$VIM -p"
+alias vi="$VIM -p"
 
 ## git
 alias gcm='git commit -m'
@@ -134,17 +138,15 @@ alias uab='unison -auto -batch'
 alias l.='ls -la .'
 alias ll='ls -l'
 alias la='ls -la'
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias fn='find . -name $@'
 
 
 ############################################################
 ### PATH
 ############################################################
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/local/bin:$PATH
-export PATH=$HOME/.cabal/bin:$PATH
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
+export PATH="$HOME/local/bin:$PATH"
+export PATH="$HOME/.cabal/bin:$PATH"
 
 
 ############################################################
@@ -163,6 +165,6 @@ fi
 ############################################################
 
 # local zshrc
-if [ -f $HOME/.zshrc_local ]; then
-    source $HOME/.zshrc_local
+if [ -f "$HOME/.zshrc_local" ]; then
+    source "$HOME/.zshrc_local"
 fi
