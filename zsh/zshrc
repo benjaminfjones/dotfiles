@@ -106,7 +106,7 @@ RM=$(which rm)
 alias rmq="$RM"    # quiet
 alias rm="$RM -v"  # print deleted files
 
-VIM=$(which VIM)
+VIM=$(which vim)
 alias vim="$VIM -p"
 alias vi="$VIM -p"
 
