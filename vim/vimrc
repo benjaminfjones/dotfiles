@@ -18,14 +18,17 @@ call vundle#begin()
 " Vundle
 Plugin 'gmarik/Vundle.vim'
 
+" The Pope
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 
+" Vim Wiki
 Plugin 'vimwiki/vimwiki'
 
-" Vim Lion (good for quick alignment character aligning)
+" Vim Lion - quick alignment
+"
 " e.g,
 "     glip=
 "     3gLi(,
@@ -74,8 +77,10 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll)$',
     \ }
 
-" Plugin 'altercation/vim-colors-solarized'
+" Color scheme choices
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
+Plugin 'nanotech/jellybeans.vim'
 
 " LaTeX
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
@@ -94,6 +99,24 @@ if executable('ghc-mod')
     Plugin 'Shougo/vimproc'
     Plugin 'eagletmt/ghcmod-vim'
 endif
+
+" Syntastic - syntax checking
+Plugin 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" syntax checker selections
+if executable('cppcheck')
+    let g:syntastic_cpp_checkers = ['cppcheck']
+endif
+if executable('pylint')
+    let g:syntastic_python_checkers = ['pylint']
+endif
+
 
 " All Plugins must be added before the following line
 call vundle#end()
@@ -162,7 +185,8 @@ set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
 " colors solarized
-colors seoul256
+" colors seoul256
+colors jellybeans
 set bg=dark
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
