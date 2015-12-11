@@ -118,6 +118,9 @@ if executable('pylint')
 endif
 
 
+Plugin 'ARM9/arm-syntax-vim'
+au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+
 " All Plugins must be added before the following line
 call vundle#end()
 
