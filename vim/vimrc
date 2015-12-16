@@ -193,6 +193,14 @@ set bg=dark
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
 
+hi CursorLine   term=bold cterm=bold guibg=Grey40
+hi CursorColumn term=bold cterm=bold guibg=Grey40
+set cursorline
+" hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+" hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+" turn on cursor crosshairs with <Leader>c
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
 " Disable the arrow keys when in edit mode
 inoremap <Up>    <NOP>
 inoremap <Right> <NOP>
@@ -227,11 +235,6 @@ vmap <Leader>s :sort<Cr>
 set expandtab
 set tabstop=4
 set shiftwidth=4
-
-" turn on cursor crosshairs with <Leader>c
-:hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-:hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-:nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 " jk trick!
 inoremap jk <Esc>
