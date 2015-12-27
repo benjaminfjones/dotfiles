@@ -23,6 +23,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-markdown'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'cpp', 'haskell', 'matlab']
 
@@ -115,6 +116,27 @@ endif
 if executable('pylint')
     let g:syntastic_python_checkers = ['pylint']
 endif
+if executable('hlint')
+    let g:syntastic_haskell_checkers = ['hlint']
+endif
+
+" Ag searching with results in QuickFix window!
+" Usage: :Ag [options] {pattern} [{directory}]
+"
+Plugin 'rking/ag.vim'
+let g:ag_working_path_mode="r"  " always search from project root
+" Note: In the quickfix window, you can use:
+"
+"     e    to open file and close the quickfix window
+"     o    to open (same as enter)
+"     go   to preview file (open but maintain focus on ag.vim results)
+"     t    to open in new tab
+"     T    to open in new tab silently
+"     h    to open in horizontal split
+"     H    to open in horizontal split silently
+"     v    to open in vertical split
+"     gv   to open in vertical split silently
+"     q    to close the quickfix window
 
 
 Plugin 'ARM9/arm-syntax-vim'
@@ -123,9 +145,8 @@ au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
 " All Plugins must be added before the following line
 call vundle#end()
 
-"""""""""""""""""""""""
-" POST BUNDLE OPTIONS "
-"""""""""""""""""""""""
+
+"== POST BUNDLE OPTIONS ===================================
 
 " Set the leader as ';' instead of '\\'
 let mapleader      = ";"
@@ -141,12 +162,6 @@ set backspace=indent,eol,start
 
 " Incremental searching
 set incsearch
-
-" ag the silver searcher integration
-if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s --nocolor -g ""'
-endif
 
 " Cursor context
 set scrolloff=3
