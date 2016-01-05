@@ -284,3 +284,30 @@ let @h = "yypVr"       " create markdown style header below current line
 let @q = "{!}fmt"      " format current selection
 :nnoremap <Leader>w :%s/\s\+$//<CR>
 :nnoremap <Leader>p :w !pbcopy<CR><CR>
+
+
+" Search filesystem using 'ag'
+" Credit: https://github.com/elliottt/vim-config
+function FindPat(pat) abort
+    let l:makeprg_bak     = &makeprg
+    let l:errorformat_bak = &errorformat
+
+    try
+        let &l:makeprg     = 'ag --vimgrep -- ' . a:pat
+        let &l:errorformat = "%f:%l:%c:%m"
+        Make
+
+    finally
+
+        let &l:makeprg     = l:makeprg_bak
+        let &l:errorformat = l:errorformat_bak
+    endtry
+endfunction
+
+" Search commands: :Find arg1 arg2
+"                  :Todo
+command -nargs=1 Find call FindPat(<f-args>)
+command -nargs=0 Todo call FindPat('TODO\|XXX')
+
+" Grep for the word under the cursor
+nnoremap <silent> <Leader>f yiw:Find '<C-r>"'<Cr>
