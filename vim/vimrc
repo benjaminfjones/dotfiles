@@ -27,6 +27,9 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-markdown'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'cpp', 'haskell', 'matlab']
 
+" Kill buffer + window with <C-d> (mapping below)
+Plugin 'mhinz/vim-sayonara'
+
 " Vim Wiki
 Plugin 'vimwiki/vimwiki'
 
@@ -68,7 +71,7 @@ let g:airline_theme = 'simple'
 
 " ctrl-p
 Plugin 'kien/ctrlp.vim'
-let g:ctrlp_map = '<c-p>'
+let g:ctrlp_map = '<space>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*.o,*.hi,*/tmp/*,*.so,*.swp,*.zip,*.tgz,*.gz
@@ -120,11 +123,13 @@ if executable('hlint')
     let g:syntastic_haskell_checkers = ['hlint']
 endif
 
+
+" DISABLED in favor of elliottt's vim-dispatchy version
 " Ag searching with results in QuickFix window!
 " Usage: :Ag [options] {pattern} [{directory}]
 "
-Plugin 'rking/ag.vim'
-let g:ag_working_path_mode="r"  " always search from project root
+" Plugin 'rking/ag.vim'
+" let g:ag_working_path_mode="r"  " always search from project root
 " Note: In the quickfix window, you can use:
 "
 "     e    to open file and close the quickfix window
@@ -200,8 +205,6 @@ set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
-" colors solarized
-" colors seoul256
 colors jellybeans
 set bg=dark
 " reset highlighting
@@ -212,10 +215,6 @@ hi CursorLine   term=bold cterm=bold guibg=Grey40
 hi CursorColumn term=bold cterm=bold guibg=Grey40
 set cursorline
 nnoremap <Leader>c :set cursorcolumn!<CR>
-
-" bright RED version:
-" hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-" hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 " Disable the arrow keys when in edit mode
 inoremap <Up>    <NOP>
@@ -272,8 +271,9 @@ function! Prev()
     endif
 endfunction
 
-nnoremap <C-n> :call Next()<Cr>
-nnoremap <C-m> :call Prev()<Cr>
+nnoremap <silent> <C-n> :call Next()<Cr>
+nnoremap <silent> <C-p> :call Prev()<Cr>
+nnoremap <silent> <C-d> :Sayonara<Cr>
 
 
 """""""""
