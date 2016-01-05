@@ -53,7 +53,7 @@ vmap <Leader>a, :Tabularize /,<CR>
 " Indenting
 Plugin 'IndentAnything'
 
-" Trevor
+" Haskell
 Plugin 'elliottt/haskell-indent'
 Plugin 'elliottt/vim-haskell'
 
@@ -187,8 +187,7 @@ if has("spell")
     set nospell
 endif
 
-" Hint column 78
-" set colorcolumn=78
+" set text wrap width
 set textwidth=78
 
 " Highlight trailing space, and tab characters, toggle with <leader>-s
@@ -208,13 +207,15 @@ set bg=dark
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
 
+" Grey cursor line/col highlights
 hi CursorLine   term=bold cterm=bold guibg=Grey40
 hi CursorColumn term=bold cterm=bold guibg=Grey40
 set cursorline
+nnoremap <Leader>c :set cursorcolumn!<CR>
+
+" bright RED version:
 " hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 " hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-" turn on cursor crosshairs with <Leader>c
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
 " Disable the arrow keys when in edit mode
 inoremap <Up>    <NOP>
