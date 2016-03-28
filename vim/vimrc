@@ -57,14 +57,16 @@ Plugin 'IndentAnything'
 Plugin 'elliottt/haskell-indent'
 Plugin 'elliottt/vim-haskell'
 
-" Airline
-Plugin 'bling/vim-airline'
-set laststatus=2
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_powerline_fonts = 0
-let g:airline_theme = 'simple'
+Plugin 'itchyny/lightline.vim'
+set laststatus=2  " enable status line and message line
+set noshowmode    " turn off redundant mode display
+let g:lightline = {
+      \  'colorscheme': 'landscape',
+      \  'active': {
+      \    'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'relativepath' ] ],
+      \    'right': [ [ 'percent', 'lineinfo' ], [ 'filetype' ] ]
+      \  }
+      \}
 
 " ctrl-p
 Plugin 'kien/ctrlp.vim'
@@ -73,14 +75,16 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*.o,*.hi,*/tmp/*,*.so,*.swp,*.zip,*.tgz,*.gz
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|cabal\-sandbox)$|[\/]dist$',
-    \ 'file': '\v\.(exe|so|dll)$',
+    \ 'dir':  '\v[\/]\.(git|hg|svn|cabal\-sandbox|stack-work)$|[\/]dist$',
+    \ 'file': '\v\.(exe|so|o|dll|dylib|a|hi)$',
     \ }
 
 " Color scheme choices
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'junegunn/seoul256.vim'
-Plugin 'nanotech/jellybeans.vim'
+Plugin 'itchyny/landscape.vim'
+" Past themes:
+" Plugin 'altercation/vim-colors-solarized'
+" Plugin 'junegunn/seoul256.vim'
+" Plugin 'nanotech/jellybeans.vim'
 
 " LaTeX
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
