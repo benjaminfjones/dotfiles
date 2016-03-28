@@ -2,6 +2,10 @@ setlocal autoindent
 setlocal nocindent
 setlocal expandtab
 
+" Set the tab size
+setlocal tabstop=4
+setlocal shiftwidth=2
+
 setlocal include="^\s*import\s\+\(qualified\s\+\)\?\zs[^ \t]\+\ze"
 setlocal includeexpr=substitute(v:fname,'\\.','/','g').'.hs'
 
@@ -22,8 +26,11 @@ nmap <buffer> --\| O--<Space>\|<Space>
 nmap <buffer> <localleader>l O{-# LANGUAGE  #-}<Esc>hhhi
 
 " Insert an import declaration
-nmap <buffer> <localleader>i Oimport 
+nmap <buffer> <localleader>i Oimport<Space>
 
-" Set the tab size
-setlocal tabstop=4
-setlocal shiftwidth=2
+
+if haskell#StackYamlFileExists()  " Configure :make for stack build
+    compiler stack-build
+elseif haskell#CabalFileExists()  " Configure :make for cabal build
+    compiler cabal-build
+endif
