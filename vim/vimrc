@@ -97,56 +97,38 @@ Plugin 'renamer.vim'
 " SAL syntax
 Plugin 'benjaminfjones/sal-syntax'
 
-" ghc-mod
-" key mappings in ~/.vim/after/ftplugin/haskell.vim
-if executable('ghc-mod')
-    Plugin 'Shougo/vimproc'
-    Plugin 'eagletmt/ghcmod-vim'
-endif
-
 " Syntastic - syntax checking
 Plugin 'scrooloose/syntastic'
+" new user defaults
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-" syntax checker selections
-if executable('cppcheck')
-    let g:syntastic_cpp_checkers = ['cppcheck']
-endif
-if executable('pylint')
-    let g:syntastic_python_checkers = ['pylint']
-endif
-if executable('hlint')
-    let g:syntastic_haskell_checkers = ['hlint']
-endif
-
-
-" DISABLED in favor of elliottt's vim-dispatchy version
-" Ag searching with results in QuickFix window!
-" Usage: :Ag [options] {pattern} [{directory}]
+" default mode is passive: check only on demand
+" let g:syntastic_mode_map = {
+"     \ "mode": "passive",
+"     \ "active_filetypes": [],
+"     \ "passive_filetypes": [] }
 "
-" Plugin 'rking/ag.vim'
-" let g:ag_working_path_mode="r"  " always search from project root
-" Note: In the quickfix window, you can use:
-"
-"     e    to open file and close the quickfix window
-"     o    to open (same as enter)
-"     go   to preview file (open but maintain focus on ag.vim results)
-"     t    to open in new tab
-"     T    to open in new tab silently
-"     h    to open in horizontal split
-"     H    to open in horizontal split silently
-"     v    to open in vertical split
-"     gv   to open in vertical split silently
-"     q    to close the quickfix window
+" Give specific checkers for most used languages
+let g:syntastic_haskell_checkers = ['']
+let g:syntastic_cpp_checkers = ['cppcheck']
+let g:syntastic_python_checkers = ['pylint']
+map <Leader>sy :SyntasticToggleMode<CR>
 
+" (Disabled) ghc-mod support
+" Plugin 'Shougo/vimproc.vim'
+" Plugin 'eagletmt/ghcmod-vim'
 
-Plugin 'ARM9/arm-syntax-vim'
-au BufNewFile,BufRead *.s,*.S set filetype=arm " arm = armv6/7
+" QFEnter - open quickfix/loclist items in splits, tabs, etc..
+Plugin 'yssl/QFEnter'
+let g:qfenter_open_map = ['<CR>']
+let g:qfenter_vopen_map = ['<Leader>v']
+let g:qfenter_hopen_map = ['<Leader>h']
+let g:qfenter_topen_map = ['<Leader>t']
 
 " All Plugins must be added before the following line
 call vundle#end()
@@ -160,6 +142,8 @@ let maplocalleader = ";"
 
 " Enable filetype detection
 filetype plugin indent on
+
+set lazyredraw
 
 set ignorecase smartcase
 
@@ -196,9 +180,8 @@ endif
 " set text wrap width
 set textwidth=78
 
-" Highlight trailing space, and tab characters, toggle with <leader>-s
+" Highlight trailing space, and tab characters
 set list lcs=tab:>-,trail:.
-nmap <leader>s :set nolist!<CR>
 
 " Completion options
 set wildmode=longest:full,list:full
@@ -206,7 +189,7 @@ set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
-colors jellybeans
+colors landscape
 set bg=dark
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
@@ -214,7 +197,7 @@ highlight Normal cterm=NONE ctermbg=NONE
 " Grey cursor line/col highlights
 hi CursorLine   term=bold cterm=bold guibg=Grey40
 hi CursorColumn term=bold cterm=bold guibg=Grey40
-set cursorline
+" set cursorline
 nnoremap <Leader>c :set cursorcolumn!<CR>
 
 " Disable the arrow keys when in edit mode
@@ -236,16 +219,10 @@ nnoremap <F3> :set spell!<CR>
 " Swap files in one place
 set directory=$VIMHOME/swap
 
-" Silencio make! with <Leader>m
-nnoremap <leader>m :silent make!\|redraw!\|cw<CR>
-
 " Disable the bell
 set noerrorbells
 set visualbell
 set t_vb=
-
-" Map <Leader>s to sort the visual selection
-vmap <Leader>s :sort<Cr>
 
 " Always expand tabs to spaces
 set expandtab
@@ -274,8 +251,6 @@ endfunction
 
 nnoremap <silent> <C-n> :call Next()<Cr>
 nnoremap <silent> <C-p> :call Prev()<Cr>
-nnoremap <silent> <C-d> :Sayonara<Cr>
-
 
 """""""""
 " macros
@@ -312,3 +287,4 @@ command -nargs=0 Todo call FindPat('TODO\|XXX')
 
 " Grep for the word under the cursor
 nnoremap <silent> <Leader>f yiw:Find '<C-r>"'<Cr>
+nnoremap <silent> <Leader>l :ccl <Cr>
