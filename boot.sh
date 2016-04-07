@@ -17,7 +17,7 @@ echo "dotfiles REPO_DIR = $REPO_DIR"
 # git reset --hard HEAD
 
 # link dotfiles
-MK_DOT="ghci gitconfig tmux.conf vim zsh vim/vimrc zsh/zshrc"
+MK_DOT="ghci gitconfig tmux.conf vim zsh vim/vimrc zsh/zshrc zsh/zshrc_alias"
 
 echo "Linking dotfiles"
 for file in $(echo $MK_DOT)
