@@ -91,12 +91,14 @@ plugins=(git cabal brew pass autojump)
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
-if [ -f "$HOME/.zshrc_alias" ]; then
-    source "$HOME/.zshrc_alias"
+ALIASES="$HOME/.zshrc_alias"
+if [ -f "$ALIASES" ]; then
+    source "$ALIASES"
 fi
 
 
 # local zshrc
-if [ -f "$HOME/.zshrc_local" ]; then
-    source "$HOME/.zshrc_local"
+LOCALS="$HOME/.zshrc_local"
+if [ -f "$LOCALS" ]; then
+    source "$LOCALS"
 fi
