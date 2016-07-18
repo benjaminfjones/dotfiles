@@ -38,6 +38,8 @@ Plugin 'tommcdo/vim-exchange'
 
 " Vim Wiki
 Plugin 'vimwiki/vimwiki'
+" remap key: toggle todo list item
+nmap <Leader>tt <Plug>VimwikiToggleListItem
 
 " Vim Lion - quick alignment
 "
