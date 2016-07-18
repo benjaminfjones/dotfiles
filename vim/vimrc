@@ -7,6 +7,11 @@ let $VIMHOME = $HOME . '/.vim'
 set nocompatible
 filetype off
 
+" Set the leader as ';' instead of '\'
+let mapleader      = ";"
+let maplocalleader = ";"
+
+
 """""""""""
 " BUNDLES "
 """""""""""
@@ -135,10 +140,6 @@ call vundle#end()
 
 
 "== POST BUNDLE OPTIONS ===================================
-
-" Set the leader as ';' instead of '\\'
-let mapleader      = ";"
-let maplocalleader = ";"
 
 " Enable filetype detection
 filetype plugin indent on
