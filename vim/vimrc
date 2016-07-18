@@ -72,12 +72,12 @@ Plugin 'itchyny/lightline.vim'
 set laststatus=2  " enable status line and message line
 set noshowmode    " turn off redundant mode display
 let g:lightline = {
-      \  'colorscheme': 'landscape',
       \  'active': {
       \    'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'relativepath' ] ],
       \    'right': [ [ 'percent', 'lineinfo' ], [ 'filetype' ] ]
       \  }
       \}
+"      \  'colorscheme': 'landscape',
 
 " ctrl-p
 Plugin 'kien/ctrlp.vim'
@@ -91,7 +91,7 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 " Color scheme choices
-Plugin 'itchyny/landscape.vim'
+" Plugin 'itchyny/landscape.vim'
 " Past themes:
 " Plugin 'altercation/vim-colors-solarized'
 " Plugin 'junegunn/seoul256.vim'
@@ -196,7 +196,7 @@ set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
-colors landscape
+" colors landscape
 set bg=dark
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
@@ -266,11 +266,13 @@ nnoremap <silent> <C-p> :call Prev()<Cr>
 let @h = "yypVr"       " create markdown style header below current line
 let @q = "{!}fmt"      " format current selection
 :nnoremap <Leader>w :%s/\s\+$//<CR>
-:nnoremap <Leader>p :w !pbcopy<CR><CR>
 
 
+" ---------------------------------------------------------------------
 " Search filesystem using 'ag'
+"
 " Credit: https://github.com/elliottt/vim-config
+
 function FindPat(pat) abort
     let l:makeprg_bak     = &makeprg
     let l:errorformat_bak = &errorformat
