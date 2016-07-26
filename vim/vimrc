@@ -32,6 +32,9 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-markdown'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'cpp', 'haskell', 'matlab']
 
+" git gutter
+Plugin 'airblade/vim-gitgutter'
+
 " exchange.vim -- cx{motion} for first of pair, then cx{motion} swaps second
 " with first
 Plugin 'tommcdo/vim-exchange'
@@ -75,9 +78,9 @@ let g:lightline = {
       \  'active': {
       \    'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'relativepath' ] ],
       \    'right': [ [ 'percent', 'lineinfo' ], [ 'filetype' ] ]
-      \  }
+      \  },
+      \  'colorscheme': 'landscape'
       \}
-"      \  'colorscheme': 'landscape',
 
 " ctrl-p
 Plugin 'kien/ctrlp.vim'
@@ -91,7 +94,7 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 " Color scheme choices
-" Plugin 'itchyny/landscape.vim'
+Plugin 'itchyny/landscape.vim'
 " Past themes:
 " Plugin 'altercation/vim-colors-solarized'
 " Plugin 'junegunn/seoul256.vim'
@@ -196,7 +199,7 @@ set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
-" colors landscape
+colors landscape
 set bg=dark
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
