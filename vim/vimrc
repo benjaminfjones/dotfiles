@@ -1,6 +1,12 @@
-"""""""""""
-" GLOBALS "
-"""""""""""
+" .vimrc
+"
+" Author: Benjamin Jones <benjaminfjones@gmail.com>
+"         with help from many others
+"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Prelude
+
 let $VIMHOME = $HOME . '/.vim'
 
 " required for Vundle.vim
@@ -12,9 +18,8 @@ let mapleader      = ";"
 let maplocalleader = ";"
 
 
-"""""""""""
-" BUNDLES "
-"""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins (Vundle)
 
 " set the runtime path to include Vundle.vim and initialize
 set rtp+=$VIMHOME/bundle/Vundle.vim
@@ -30,10 +35,13 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-markdown'
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'cpp', 'haskell', 'matlab']
+let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'c', 'cpp',
+                                  \ 'haskell', 'matlab']
 
 " git gutter
 Plugin 'airblade/vim-gitgutter'
+"let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_sign_column_always = 1
 
 " exchange.vim -- cx{motion} for first of pair, then cx{motion} swaps second
 " with first
@@ -94,9 +102,10 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 " Color scheme choices
-Plugin 'itchyny/landscape.vim'
+Plugin 'altercation/vim-colors-solarized'
+"
 " Past themes:
-" Plugin 'altercation/vim-colors-solarized'
+" Plugin 'itchyny/landscape.vim'
 " Plugin 'junegunn/seoul256.vim'
 " Plugin 'nanotech/jellybeans.vim'
 
@@ -144,11 +153,26 @@ let g:qfenter_vopen_map = ['<Leader>v']
 let g:qfenter_hopen_map = ['<Leader>h']
 let g:qfenter_topen_map = ['<Leader>t']
 
+" Snippets
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+" Trigger configuration
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+" EasyMotion
+Plugin 'easymotion/vim-easymotion'
+map <Leader> <Plug>(easymotion-prefix)
+
+
 " All Plugins must be added before the following line
 call vundle#end()
 
 
-"== POST BUNDLE OPTIONS ===================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Post-plugin options
 
 " Enable filetype detection
 filetype plugin indent on
@@ -199,16 +223,21 @@ set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
-colors landscape
-set bg=dark
+set background=dark
+colorscheme solarized
+
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
+highlight SignColumn ctermbg=Black
 
 " Grey cursor line/col highlights
-hi CursorLine   term=bold cterm=bold guibg=Grey40
-hi CursorColumn term=bold cterm=bold guibg=Grey40
+highlight CursorLine   term=bold cterm=bold guibg=Grey40
+highlight CursorColumn term=bold cterm=bold guibg=Grey40
 " set cursorline
 nnoremap <Leader>c :set cursorcolumn!<CR>
+
+" turn on line numbers
+set number
 
 " Disable the arrow keys when in edit mode
 inoremap <Up>    <NOP>
@@ -262,16 +291,19 @@ endfunction
 nnoremap <silent> <C-n> :call Next()<Cr>
 nnoremap <silent> <C-p> :call Prev()<Cr>
 
-"""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " macros
-"""""""""
 
-let @h = "yypVr"       " create markdown style header below current line
-let @q = "{!}fmt"      " format current selection
-:nnoremap <Leader>w :%s/\s\+$//<CR>
+" create markdown style header below current line
+let @h = "yypVr"
+" format current selection
+let @q = "{!}fmt"
+" remove trailing whitespace
+let @w = "mW:%s/\s\+$//<CR>'W"
 
 
-" ---------------------------------------------------------------------
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Search filesystem using 'ag'
 "
 " Credit: https://github.com/elliottt/vim-config
