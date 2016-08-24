@@ -303,7 +303,7 @@ let @h = "yypVr"
 " format current selection
 let @q = "{!}fmt"
 " remove trailing whitespace
-let @w = "mW:%s/\s\+$//<CR>'W"
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
