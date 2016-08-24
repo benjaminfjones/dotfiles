@@ -154,13 +154,16 @@ let g:qfenter_hopen_map = ['<Leader>h']
 let g:qfenter_topen_map = ['<Leader>t']
 
 " Snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-" Trigger configuration
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsEditSplit="vertical"
+if v:version >= 704
+    " UltiSnips!
+    Plugin 'sirver/UltiSnips'
+    Plugin 'honza/vim-snippets'
+    " Trigger configuration
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+    let g:UltiSnipsEditSplit="vertical"
+endif
 
 " EasyMotion
 Plugin 'easymotion/vim-easymotion'
