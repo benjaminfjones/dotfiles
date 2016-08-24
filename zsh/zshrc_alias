@@ -3,56 +3,66 @@
 ### Aliases
 ############################################################
 
-alias l.='ls -la .'
-alias ll='ls -l'
-alias la='ls -la'
+# Determine if aliases have already been loaded
+MY_ALIASES_LOADED="${MY_ALIASES_LOADED:-}"
+if [[ -n "$MY_ALIASES_LOADED" ]]; then
+    echo "Refusing to reload alises; please log out and log back in!"
+else
 
-RM=$(which rm)
-alias rmq="$RM"    # quiet
-alias rm="$RM -v"  # loud
+    MY_ALIASES_LOADED="yes"
+    echo "Loading aliases..."
 
-topit() { /usr/bin/top -p `pgrep $1` }
-vimfind() { find -name $1 -exec vim -p {} + }
-alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias fn='find . -name $@'
+    alias l.='ls -la .'
+    alias ll='ls -l'
+    alias la='ls -la'
 
-# Vim
-VIM=$(which vim)
-alias vim="$VIM -p"
-alias vi="$VIM -p"
+    RM=$(which rm)
+    alias rmq="$RM"    # quiet
+    alias rm="$RM -v"  # loud
 
-# git
-alias gcm='git commit -m'
-alias gits='git status'
+    topit() { /usr/bin/top -p `pgrep $1` }
+    vimfind() { find -name $1 -exec vim -p {} + }
+    alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+    alias fn='find . -name $@'
 
-# cabal
-alias csi="cabal sandbox init"
-alias csd="cabal sandbox delete"
-alias ghc-sandbox="ghc -no-user-package-db \
-                       -package-db .cabal-sandbox/*-packages.conf.d"
-alias ghci-sandbox="ghci -no-user-package-db \
-                         -package-db .cabal-sandbox/*-packages.conf.d"
-alias runhaskell-sandbox="runhaskell -no-user-package-db \
-                                     -package-db .cabal-sandbox/*-packages.conf.d"
+    # Vim
+    VIM=$(which vim)
+    alias vim="$VIM -p"
+    alias vi="$VIM -p"
 
-## python
-alias py='python'
-alias ipy='ipython'
-alias pyserve='python -m SimpleHTTPServer'
+    # git
+    alias gcm='git commit -m'
+    alias gits='git status'
+
+    # cabal
+    alias csi="cabal sandbox init"
+    alias csd="cabal sandbox delete"
+    alias ghc-sandbox="ghc -no-user-package-db \
+                           -package-db .cabal-sandbox/*-packages.conf.d"
+    alias ghci-sandbox="ghci -no-user-package-db \
+                             -package-db .cabal-sandbox/*-packages.conf.d"
+    alias runhaskell-sandbox="runhaskell -no-user-package-db \
+                                         -package-db .cabal-sandbox/*-packages.conf.d"
+
+    ## python
+    alias py='python'
+    alias ipy='ipython'
+    alias pyserve='python -m SimpleHTTPServer'
 
 
-## Colorized man
+    ## Colorized man
 
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-            man "$@"
-}
+    man() {
+        env \
+            LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+            LESS_TERMCAP_md=$(printf "\e[1;31m") \
+            LESS_TERMCAP_me=$(printf "\e[0m") \
+            LESS_TERMCAP_se=$(printf "\e[0m") \
+            LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+            LESS_TERMCAP_ue=$(printf "\e[0m") \
+            LESS_TERMCAP_us=$(printf "\e[1;32m") \
+                man "$@"
+    }
 
-export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -c 'nnoremap q :q!<CR>' -\""
+    #export MANPAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -c 'nnoremap q :q!<CR>' -\"" man"
+fi
