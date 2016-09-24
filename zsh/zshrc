@@ -85,7 +85,7 @@ export UPDATE_ZSH_DAYS=30
 DISABLE_AUTO_TITLE="true"
 
 # plugins
-plugins=(git cabal brew pass autojump osx)
+plugins=(git cabal brew pass autojump osx ssh-agent)
 
 # Oh-My-Zsh addons
 source $ZSH/oh-my-zsh.sh
