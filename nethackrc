@@ -1,0 +1,19 @@
+OPTIONS=autodig, autoopen
+OPTIONS=catname:Bub, dogname:Lola, fruit:Pineapple, horsename:Ed, name:roscoe
+OPTIONS=color, hilite_pet, hilite_pile
+OPTIONS=autopickup, pickup_types:?!/$
+OPTIONS=boulder:0
+
+OPTIONS=menucolors
+MENUCOLOR=" blessed "=green
+MENUCOLOR=" holy "=green
+MENUCOLOR=" cursed "=red
+MENUCOLOR=" unholy "=red
+MENUCOLOR=" cursed .* (being worn)"=orange&underline
+
+# These don't work for some reason on NH 3.6.0 installed using homebrew
+# SAVEDIR=/Users/bjones/Dropbox/nethack/save
+# BONESDIR=/Users/bjones/Dropbox/nethack/bones
+
+OPTIONS=windowtype:X11
+OPTIONS=tile_file:/Users/bjones/Downloads/DawnHack32.bmp
