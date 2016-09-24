@@ -142,10 +142,6 @@ let g:syntastic_cpp_checkers = ['cppcheck']
 let g:syntastic_python_checkers = ['pylint']
 map <Leader>sy :SyntasticToggleMode<CR>
 
-" (Disabled) ghc-mod support
-" Plugin 'Shougo/vimproc.vim'
-" Plugin 'eagletmt/ghcmod-vim'
-
 " QFEnter - open quickfix/loclist items in splits, tabs, etc..
 Plugin 'yssl/QFEnter'
 let g:qfenter_open_map = ['<CR>']
@@ -169,6 +165,19 @@ endif
 Plugin 'easymotion/vim-easymotion'
 map <Leader> <Plug>(easymotion-prefix)
 
+" vim-grepper : async grep/ag'ing for Vim 8 and NeoVim
+Plugin 'mhinz/vim-grepper'
+let g:grepper = {
+    \ 'tools': ['ag', 'git', 'grep'],
+    \ 'open':  1,
+    \ 'jump':  1,
+    \ }
+" The first two mappings open a prompt whereas the last one will search for
+" the word under the cursor right away.
+nnoremap <leader>git :Grepper -tool git -noswitch<cr>
+nnoremap <leader>ag  :Grepper -tool ag  -grepprg ag --vimgrep -G '^.+\.txt'<cr>
+nnoremap <leader>*   :Grepper -tool ag -cword -noprompt<cr>
+nnoremap <leader>f   :Grepper -tool ag -cword -noprompt<cr>
 
 " All Plugins must be added before the following line
 call vundle#end()
@@ -310,28 +319,28 @@ nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 " Search filesystem using 'ag'
 "
 " Credit: https://github.com/elliottt/vim-config
-
-function FindPat(pat) abort
-    let l:makeprg_bak     = &makeprg
-    let l:errorformat_bak = &errorformat
-
-    try
-        let &l:makeprg     = 'ag --vimgrep -- ' . a:pat
-        let &l:errorformat = "%f:%l:%c:%m"
-        Make
-
-    finally
-
-        let &l:makeprg     = l:makeprg_bak
-        let &l:errorformat = l:errorformat_bak
-    endtry
-endfunction
-
-" Search commands: :Find arg1 arg2
-"                  :Todo
-command -nargs=1 Find call FindPat(<f-args>)
-command -nargs=0 Todo call FindPat('TODO\|XXX')
-
-" Grep for the word under the cursor
-nnoremap <silent> <Leader>f yiw:Find '<C-r>"'<Cr>
-nnoremap <silent> <Leader>l :ccl <Cr>
+"
+" function FindPat(pat) abort
+"     let l:makeprg_bak     = &makeprg
+"     let l:errorformat_bak = &errorformat
+"
+"     try
+"         let &l:makeprg     = 'ag --vimgrep -- ' . a:pat
+"         let &l:errorformat = "%f:%l:%c:%m"
+"         Make
+"
+"     finally
+"
+"         let &l:makeprg     = l:makeprg_bak
+"         let &l:errorformat = l:errorformat_bak
+"     endtry
+" endfunction
+"
+" " Search commands: :Find arg1 arg2
+" "                  :Todo
+" command -nargs=1 Find call FindPat(<f-args>)
+" command -nargs=0 Todo call FindPat('TODO\|XXX')
+"
+" " Grep for the word under the cursor
+" nnoremap <silent> <Leader>f yiw:Find '<C-r>"'<Cr>
+" nnoremap <silent> <Leader>l :ccl <Cr>
