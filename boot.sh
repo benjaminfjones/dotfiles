@@ -51,7 +51,7 @@ do
         mv "$dest" "$dest.OLD"
     fi
 
-    local src
+    local src=""
     if [[ -nz "$SIMPLE" && -f "$REPO_DIR/simple/$file" ]]; then
         src="$REPO_DIR/simple/$file"  # link the simple version
     else
