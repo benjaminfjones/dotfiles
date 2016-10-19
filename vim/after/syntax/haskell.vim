@@ -22,7 +22,7 @@ nnoremap <buffer> <localleader>#u i{-# UNPACK #-} <Esc>F{
 nnoremap <buffer> <localleader>i Oimport 
 
 " Set the tab size
-setlocal tabstop=4
+setlocal tabstop=2
 setlocal shiftwidth=2
 
 " Spellcheck comments
@@ -55,3 +55,5 @@ endif
 if (exists("hs_highlight_cpp"))
     unlet hs_highlight_cpp
 endif
+
+setlocal nospell
