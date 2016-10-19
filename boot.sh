@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 #
 # Link dotfiles to $HOME, making backups if old ones exist. If invoked with -s
 # or --simple, file in the 'simple/' directory will be prefered over ones in
@@ -7,18 +7,22 @@
 set -e
 
 # parse command line args
-while [[ $# -gt 1 ]]; do
-    key=$1
-    case $key in
+SIMPLE=""
+while [[ $# -ge 1 ]]; do
+    key="$1"
+
+    case "$key" in
         -s|--simple)
+        echo "Simple installation requested."
         SIMPLE="y"
         shift
         ;;
 
         *)
+        echo "Unrecognized parameter: $key"
+        exit 1
         ;;
     esac
-    shift
 done
 
 # get absolute path to dotfiles repo (assumed to be where this script lives,
@@ -42,17 +46,16 @@ MK_DOT="ghci gitconfig tmux.conf vim zsh vim/vimrc zsh/zshrc zsh/zshrc_alias"
 echo "Linking dotfiles"
 for file in $(echo $MK_DOT)
 do
-    local dest="$HOME/.$(basename $file)"
+    dest="$HOME/.$(basename $file)"
     if [ -h "$dest" ]; then
         echo "removing symlink $dest"
-        rm $dest
+        rm "$dest"
     elif [ -f "$dest" ] || [ -d "$dest" ]; then
         echo "moving file/dir $dest to $dest.OLD"
         mv "$dest" "$dest.OLD"
     fi
 
-    local src=""
-    if [[ -nz "$SIMPLE" && -f "$REPO_DIR/simple/$file" ]]; then
+    if [[ "$SIMPLE" == "y" && -f "$REPO_DIR/simple/$file" ]]; then
         src="$REPO_DIR/simple/$file"  # link the simple version
     else
         src="$REPO_DIR/$file"  # link the regular version
@@ -67,7 +70,7 @@ pushd $HOME/.vim > /dev/null
 zsh boot.sh
 popd > /dev/null
 
-if [ -nz "$SIMPLE" ]; then
+if [[ "$SIMPLE" == "y" ]]; then
     echo "Skipping oh-my-zsh and tmux-status..."
 else
     echo "Cloning oh-my-zsh and tmux-status..."
