@@ -1,7 +1,8 @@
 " .vimrc
 "
 " Author: Benjamin Jones <benjaminfjones@gmail.com>
-"         with help from many others
+"         with help from many others, in particular
+"         Trevor Elliottt (https://github.com/elliottt).
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -40,7 +41,7 @@ let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'c', 'cpp',
 
 " git gutter
 Plugin 'airblade/vim-gitgutter'
-"let g:gitgutter_override_sign_column_highlight = 0
+let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_sign_column_always = 1
 
 " exchange.vim -- cx{motion} for first of pair, then cx{motion} swaps second
@@ -72,9 +73,6 @@ nmap <Leader>a, :Tabularize /,<CR>
 vmap <Leader>a, :Tabularize /,<CR>
 
 
-" Indenting
-Plugin 'IndentAnything'
-
 " Haskell
 Plugin 'elliottt/haskell-indent'
 Plugin 'elliottt/vim-haskell'
@@ -87,7 +85,7 @@ let g:lightline = {
       \    'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'relativepath' ] ],
       \    'right': [ [ 'percent', 'lineinfo' ], [ 'filetype' ] ]
       \  },
-      \  'colorscheme': 'landscape'
+      \  'colorscheme': 'solarized'
       \}
 
 " ctrl-p
@@ -103,44 +101,16 @@ let g:ctrlp_custom_ignore = {
 
 " Color scheme choices
 Plugin 'altercation/vim-colors-solarized'
-"
 " Past themes:
 " Plugin 'itchyny/landscape.vim'
 " Plugin 'junegunn/seoul256.vim'
 " Plugin 'nanotech/jellybeans.vim'
-
-" LaTeX
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
-let g:LatexBox_viewer   = 'open -a Skim'
-let g:LatexBox_quickfix = 2  " open quickfix but cursor stays in current window
 
 " Rename all the files with :Ren
 Plugin 'renamer.vim'
 
 " SAL syntax
 Plugin 'benjaminfjones/sal-syntax'
-
-" Syntastic - syntax checking
-Plugin 'scrooloose/syntastic'
-" new user defaults
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-" default mode is passive: check only on demand
-" let g:syntastic_mode_map = {
-"     \ "mode": "passive",
-"     \ "active_filetypes": [],
-"     \ "passive_filetypes": [] }
-"
-" Give specific checkers for most used languages
-let g:syntastic_haskell_checkers = ['']
-let g:syntastic_cpp_checkers = ['cppcheck']
-let g:syntastic_python_checkers = ['pylint']
-map <Leader>sy :SyntasticToggleMode<CR>
 
 " QFEnter - open quickfix/loclist items in splits, tabs, etc..
 Plugin 'yssl/QFEnter'
@@ -189,6 +159,7 @@ call vundle#end()
 " Enable filetype detection
 filetype plugin indent on
 
+set ttyfast
 set lazyredraw
 
 set ignorecase smartcase
@@ -209,7 +180,7 @@ map <Leader><Leader> :noh<Enter>
 set ruler
 
 " Fold by manually defined folds
-set foldenable
+set nofoldenable
 
 " Syntax
 if &t_Co > 2 || has("gui_running")
@@ -236,7 +207,11 @@ set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
 set background=dark
-colorscheme solarized
+try
+    colorscheme solarized
+catch /^Vim\%((\a\+)\)\=:E185/
+    " deal with it
+endtry
 
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
@@ -249,7 +224,7 @@ highlight CursorColumn term=bold cterm=bold guibg=Grey40
 nnoremap <Leader>c :set cursorcolumn!<CR>
 
 " turn on line numbers
-set number
+" set number
 
 " Disable the arrow keys when in edit mode
 inoremap <Up>    <NOP>
@@ -278,7 +253,6 @@ set t_vb=
 " Always expand tabs to spaces
 set expandtab
 set tabstop=4
-set shiftwidth=4
 
 " jk trick!
 inoremap jk <Esc>
@@ -303,6 +277,9 @@ endfunction
 nnoremap <silent> <C-n> :call Next()<Cr>
 nnoremap <silent> <C-p> :call Prev()<Cr>
 
+set nocursorcolumn
+set nocursorline
+set norelativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " macros
@@ -314,33 +291,3 @@ let @q = "{!}fmt"
 " remove trailing whitespace
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Search filesystem using 'ag'
-"
-" Credit: https://github.com/elliottt/vim-config
-"
-" function FindPat(pat) abort
-"     let l:makeprg_bak     = &makeprg
-"     let l:errorformat_bak = &errorformat
-"
-"     try
-"         let &l:makeprg     = 'ag --vimgrep -- ' . a:pat
-"         let &l:errorformat = "%f:%l:%c:%m"
-"         Make
-"
-"     finally
-"
-"         let &l:makeprg     = l:makeprg_bak
-"         let &l:errorformat = l:errorformat_bak
-"     endtry
-" endfunction
-"
-" " Search commands: :Find arg1 arg2
-" "                  :Todo
-" command -nargs=1 Find call FindPat(<f-args>)
-" command -nargs=0 Todo call FindPat('TODO\|XXX')
-"
-" " Grep for the word under the cursor
-" nnoremap <silent> <Leader>f yiw:Find '<C-r>"'<Cr>
-" nnoremap <silent> <Leader>l :ccl <Cr>
