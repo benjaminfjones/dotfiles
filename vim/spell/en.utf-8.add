@@ -40,3 +40,7 @@ encodings
 lossless
 satisfiable
 satisfiability
+cryptographic
+sanitization
+filesystem
+GuardTime
