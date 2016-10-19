@@ -214,7 +214,11 @@ set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
 set background=dark
-colorscheme solarized
+try
+    colorscheme solarized
+catch /^Vim\%((\a\+)\)\=:E185/
+    " deal with it
+endtry
 
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
