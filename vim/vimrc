@@ -148,6 +148,8 @@ nnoremap <leader>git :Grepper -tool git -noswitch<cr>
 nnoremap <leader>ag  :Grepper -tool ag  -grepprg ag --vimgrep -G '^.+\.txt'<cr>
 nnoremap <leader>*   :Grepper -tool ag -cword -noprompt<cr>
 nnoremap <leader>f   :Grepper -tool ag -cword -noprompt<cr>
+command! -nargs=* AgFile Grepper -noprompt -tool ag -grepprg ag --vimgrep <args> %
+command! -nargs=* Ag Grepper -noprompt -tool ag -grepprg ag --vimgrep <args>
 
 " All Plugins must be added before the following line
 call vundle#end()
