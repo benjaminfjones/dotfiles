@@ -1,3 +1,2 @@
-:set +s
 :def hoogle \str -> return $ ":! hoogle --count=15 \"" ++ str ++ "\""
 :set prompt "λ "
