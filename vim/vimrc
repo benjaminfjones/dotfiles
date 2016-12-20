@@ -40,9 +40,9 @@ let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'c', 'cpp',
                                   \ 'haskell', 'matlab']
 
 " git gutter
-Plugin 'airblade/vim-gitgutter'
-let g:gitgutter_override_sign_column_highlight = 0
-let g:gitgutter_sign_column_always = 1
+" Plugin 'airblade/vim-gitgutter'
+" let g:gitgutter_override_sign_column_highlight = 0
+" let g:gitgutter_sign_column_always = 1
 
 " exchange.vim -- cx{motion} for first of pair, then cx{motion} swaps second
 " with first
