@@ -1,4 +1,7 @@
-setlocal autoindent spell
+setlocal spell
+set noautoindent
+set nosmartindent
+set indentexpr=''
 
 " Insert a separating line
 nmap <buffer> --l ^72i%<Esc>^llR<Space>
