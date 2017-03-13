@@ -16,10 +16,36 @@ setopt inc_append_history
 # local functions
 fpath=($fpath ~/.zsh/functions)
 
+
+###  ZSH Line Editor Settings  ###
+
 # emacs key bindings
-bindkey -e
-bindkey "^f" forward-word
-bindkey "^b" backward-word
+# bindkey -e
+# bindkey "^f" forward-word
+# bindkey "^b" backward-word
+
+# Vi mode
+bindkey -v
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^r' history-incremental-search-backward
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_custom_status) $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+export KEYTIMEOUT=1
+
+
+############################################################
 
 # completion
 autoload -U compinit colors promptinit spectrum
@@ -27,8 +53,6 @@ compinit
 colors
 spectrum
 promptinit
-
-export EDITOR=vim
 
 # colored tab-completion
 if [[ $TERM != "dumb" ]] ; then
@@ -41,6 +65,16 @@ fi
 
 # cabal completion
 compdef -a _cabal cabal
+
+# disable auto correction
+unsetopt correct
+unsetopt correct_all
+
+
+############################################################
+
+# Set the default editor
+export EDITOR=vim
 
 # load in local config, if available
 DARWIN=`uname -a | grep Darwin`
@@ -55,10 +89,6 @@ else
     . ~/.zsh/osx-config
   fi
 fi
-
-# disable auto correction
-unsetopt correct
-unsetopt correct_all
 
 
 ############################################################
@@ -85,17 +115,19 @@ export UPDATE_ZSH_DAYS=30
 DISABLE_AUTO_TITLE="true"
 
 # plugins
-plugins=(git cabal brew pass autojump osx ssh-agent)
+plugins=(vi-mode git cabal brew pass autojump osx ssh-agent)
 
 # Oh-My-Zsh addons
 source $ZSH/oh-my-zsh.sh
+
+
+###  Local Settings  #######################################
 
 # Aliases
 ALIASES="$HOME/.zshrc_alias"
 if [ -f "$ALIASES" ]; then
     source "$ALIASES"
 fi
-
 
 # local zshrc
 LOCALS="$HOME/.zshrc_local"
