@@ -35,9 +35,13 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-markdown'
-let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'c', 'cpp',
-                                  \ 'haskell', 'matlab']
+" Plugin 'tpope/vim-markdown'
+" let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'c', 'cpp',
+"                                   \ 'haskell', 'matlab']
+
+Plugin 'plasticboy/vim-markdown'
+let g:vim_markdown_emphasis_multiline = 0
+let g:vim_markdown_math = 1
 
 " git gutter
 " Plugin 'airblade/vim-gitgutter'
@@ -129,6 +133,7 @@ if v:version >= 704
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     let g:UltiSnipsEditSplit="vertical"
+    let g:UltiSnipsUsePythonVersion = 2
 endif
 
 " EasyMotion
@@ -150,6 +155,9 @@ nnoremap <leader>*   :Grepper -tool ag -cword -noprompt<cr>
 nnoremap <leader>f   :Grepper -tool ag -cword -noprompt<cr>
 command! -nargs=* AgFile Grepper -noprompt -tool ag -grepprg ag --vimgrep <args> %
 command! -nargs=* Ag Grepper -noprompt -tool ag -grepprg ag --vimgrep <args>
+
+" vimtex -- offers good default bindings
+Plugin 'lervag/vimtex'
 
 " All Plugins must be added before the following line
 call vundle#end()
