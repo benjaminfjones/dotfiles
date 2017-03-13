@@ -159,6 +159,9 @@ command! -nargs=* Ag Grepper -noprompt -tool ag -grepprg ag --vimgrep <args>
 " vimtex -- offers good default bindings
 Plugin 'lervag/vimtex'
 
+" Neomake
+Plugin 'neomake/neomake'
+
 " All Plugins must be added before the following line
 call vundle#end()
 
