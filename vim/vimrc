@@ -35,22 +35,10 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-dispatch'
-" Plugin 'tpope/vim-markdown'
-" let g:markdown_fenced_languages = [ 'html', 'python', 'bash=sh', 'c', 'cpp',
-"                                   \ 'haskell', 'matlab']
 
 Plugin 'plasticboy/vim-markdown'
 let g:vim_markdown_emphasis_multiline = 0
 let g:vim_markdown_math = 1
-
-" git gutter
-" Plugin 'airblade/vim-gitgutter'
-" let g:gitgutter_override_sign_column_highlight = 0
-" let g:gitgutter_sign_column_always = 1
-
-" exchange.vim -- cx{motion} for first of pair, then cx{motion} swaps second
-" with first
-Plugin 'tommcdo/vim-exchange'
 
 " Vim Wiki
 Plugin 'vimwiki/vimwiki'
@@ -75,7 +63,6 @@ nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a, :Tabularize /,<CR>
 vmap <Leader>a, :Tabularize /,<CR>
-
 
 " Haskell
 Plugin 'elliottt/haskell-indent'
@@ -159,7 +146,7 @@ command! -nargs=* Ag Grepper -noprompt -tool ag -grepprg ag --vimgrep <args>
 " vimtex -- offers good default bindings
 Plugin 'lervag/vimtex'
 
-" Neomake
+" Neomake -- for asyncronous make and error population
 Plugin 'neomake/neomake'
 
 " All Plugins must be added before the following line
@@ -185,9 +172,6 @@ set incsearch
 
 " Cursor context
 set scrolloff=3
-
-" Define double <leader> to kill the search highlighting.
-map <Leader><Leader> :noh<Enter>
 
 " Always show cursor position
 set ruler
@@ -224,6 +208,7 @@ try
     colorscheme solarized
 catch /^Vim\%((\a\+)\)\=:E185/
     " deal with it
+    echom "Could not load solarized color theme, defaulting for background=dark"
 endtry
 
 " reset highlighting
@@ -233,27 +218,6 @@ highlight SignColumn ctermbg=Black
 " Grey cursor line/col highlights
 highlight CursorLine   term=bold cterm=bold guibg=Grey40
 highlight CursorColumn term=bold cterm=bold guibg=Grey40
-" set cursorline
-nnoremap <Leader>c :set cursorcolumn!<CR>
-
-" turn on line numbers
-" set number
-
-" Disable the arrow keys when in edit mode
-inoremap <Up>    <NOP>
-inoremap <Right> <NOP>
-inoremap <Down>  <NOP>
-inoremap <Left>  <NOP>
-
-" Disable the help key
-nnoremap <F1> <Esc>
-inoremap <F1> <Esc>
-
-" Set F2 as the binding to toggle the paste mode
-set pastetoggle=<F2>
-
-" Use F3 to toggle spelling
-nnoremap <F3> :set spell!<CR>
 
 " Swap files in one place
 set directory=$VIMHOME/swap
@@ -267,8 +231,15 @@ set t_vb=
 set expandtab
 set tabstop=4
 
-" jk trick!
-inoremap jk <Esc>
+" Row/Column accents
+set nocursorcolumn
+set nocursorline
+set nonumber
+set norelativenumber
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TABS
 
 " Tab/buffer navigation via elliott
 function! Next()
@@ -290,9 +261,6 @@ endfunction
 nnoremap <silent> <C-n> :call Next()<Cr>
 nnoremap <silent> <C-p> :call Prev()<Cr>
 
-set nocursorcolumn
-set nocursorline
-set norelativenumber
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " macros
@@ -301,6 +269,46 @@ set norelativenumber
 let @h = "yypVr"
 " format current selection
 let @q = "{!}fmt"
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NORMAL mode mappings
+
+" Define double <leader> to kill the search highlighting.
+nnoremap <Leader><Leader> :noh<Enter>
+" set cursorline
+nnoremap <Leader>c :set cursorcolumn!<CR>
+" move current line down
+nnoremap - ddp
+" move current line up
+nnoremap <underscore> ddP
+" uppercase the current word, put cursor after last char
+nnoremap <c-u> viwUea
+
+" Disable the help key
+nnoremap <F1> <Esc>
+" Set F2 as the binding to toggle the paste mode
+set pastetoggle=<F2>
+" Use F3 to toggle spelling
+nnoremap <F3> :set spell!<CR>
 " remove trailing whitespace
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" INSERT mode mappings
+
+" Disable the help key
+inoremap <F1> <Esc>
+" jk trick!
+inoremap jk <Esc>
+" Crtl-d to delete current line
+inoremap <c-d> <ESC>ddi
+" uppercase current word, put cursor back insert mode after last char
+inoremap <c-u> <ESC>viwUea
+
+" Disable the arrow keys when in edit mode
+inoremap <Up>    <NOP>
+inoremap <Right> <NOP>
+inoremap <Down>  <NOP>
+inoremap <Left>  <NOP>
