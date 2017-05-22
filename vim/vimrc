@@ -289,6 +289,10 @@ nnoremap - ddp
 nnoremap <underscore> ddP
 " uppercase the current word, put cursor after last char
 nnoremap <c-u> viwUea
+" edit $VIMRC in a split
+nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
+" source $VIMRC
+nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " Disable the help key
 nnoremap <F1> <Esc>
@@ -317,3 +321,12 @@ inoremap <Up>    <NOP>
 inoremap <Right> <NOP>
 inoremap <Down>  <NOP>
 inoremap <Left>  <NOP>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Abbreviations
+
+iabbrev @@ benjaminfjones@gmail.com
+iabbrev adn and
+iabbrev waht what
+iabbrev tehn then
