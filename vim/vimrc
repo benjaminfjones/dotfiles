@@ -44,6 +44,11 @@ let g:vim_markdown_math = 1
 Plugin 'vimwiki/vimwiki'
 " remap key: toggle todo list item
 nmap <Leader>tt <Plug>VimwikiToggleListItem
+let wiki = {}
+let wiki.path = '~/vimwiki/'
+let wiki.nested_syntaxes = {'haskell': 'haskell', 'python': 'python'}
+let g:vimwiki_list = [wiki]
+
 
 " Vim Lion - quick alignment
 "
