@@ -43,7 +43,7 @@ else
                              -package-db .cabal-sandbox/*-packages.conf.d"
     alias runhaskell-sandbox="runhaskell -no-user-package-db \
                                          -package-db .cabal-sandbox/*-packages.conf.d"
-    alias hask="hashtags -c ."
+    alias hask="hasktags -c ."
 
     ## python
     alias py='python'
