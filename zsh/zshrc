@@ -101,7 +101,7 @@ export UPDATE_ZSH_DAYS=30
 DISABLE_AUTO_TITLE="true"
 
 # plugins
-plugins=(vi-mode git cabal brew pass autojump osx ssh-agent)
+plugins=(vi-mode git brew autojump osx ssh-agent z)
 
 # Oh-My-Zsh addons
 source $ZSH/oh-my-zsh.sh
@@ -120,3 +120,4 @@ LOCALS="$HOME/.zshrc_local"
 if [ -f "$LOCALS" ]; then
     source "$LOCALS"
 fi
+
