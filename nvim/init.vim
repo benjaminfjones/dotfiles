@@ -1,17 +1,10 @@
-" .vimrc
+" init.vim (neovim)
 "
-" Author: Benjamin Jones <benjaminfjones@gmail.com>
-"         with help from many others
+" Author: Benjamin Jones <bfj@amazon.com>
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Prelude
-
-let $VIMHOME = $HOME . '/.vim'
-
-" required for Vundle.vim
-set nocompatible
-filetype off
 
 " Set the leader as ';' instead of '\'
 let mapleader      = ";"
@@ -19,20 +12,15 @@ let maplocalleader = ";"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins (Vundle)
+" Plugins (vim-plug)
 
-" set the runtime path to include Vundle.vim and initialize
-set rtp+=$VIMHOME/bundle/Vundle.vim
-call vundle#begin()
-
-" Vundle
-Plugin 'gmarik/Vundle.vim'
+call plug#begin(stdpath('data') . '/plugin-home')
 
 " The Pope
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
 " Vim Lion - quick alignment
 "
@@ -42,10 +30,10 @@ Plugin 'tpope/vim-commentary'
 "     glip/-->
 "     <visual>gl=
 "
-Plugin 'tommcdo/vim-lion'
+Plug 'tommcdo/vim-lion'
 
 " Tabular (better for code formatting)
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
 nmap <Leader>a: :Tabularize /:\zs<CR>
@@ -53,97 +41,100 @@ vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a, :Tabularize /,<CR>
 vmap <Leader>a, :Tabularize /,<CR>
 
-" Haskell
-" Plugin 'elliottt/haskell-indent'
-" Plugin 'elliottt/vim-haskell'
-
-Plugin 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 set laststatus=2  " enable status line and message line
 set noshowmode    " turn off redundant mode display
 let g:lightline = {
+      \  'colorscheme': 'solarized',
       \  'active': {
       \    'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'relativepath' ] ],
-      \    'right': [ [ 'percent', 'lineinfo' ], [ 'filetype' ] ]
+      \    'right': [ [ 'percent', 'lineinfo', 'formatoptions' ], [ 'filetype' ] ]
       \  },
-      \  'colorscheme': 'solarized'
+      \  'component': {
+      \    'formatoptions': '[%{&fo}]'
+      \  }
       \}
 
-" ctrl-p
-Plugin 'kien/ctrlp.vim'
-let g:ctrlp_map = '<space>'
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
-      \ --ignore .cabal-sandbox
-      \ --ignore .stack-work
-      \ -g ""'
-let g:ctrlp_cmd = 'CtrlP'
-" let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_working_path_mode = 'w'
-set wildignore+=*.o,*.hi,*/tmp/*,*.so,*.swp,*.zip,*.tgz,*.gz
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|cabal\-sandbox|stack-work)$|[\/]dist$',
-    \ 'file': '\v\.(exe|so|o|dll|dylib|a|hi)$',
-    \ }
-Plugin 'nixprime/cpsm'
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+
+" fzf and fzf.vim:  https://github.com/junegunn/fzf.vim
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+" [[B]Commits] Customize the options used by 'git log':
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags -R'
+" [Commands] --expect expression for directly executing the command
+let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+" *** Mappings ***
+" git tracked files
+nmap <space> :GFiles<CR>
+nmap <Leader>f :GFiles<CR>
+" all files
+nmap <Leader>F :Files<CR>
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>h :History<CR>
+" current buffer lines
+nmap <Leader>l :BLines<CR>
+" all open buffer lines
+nmap <Leader>L :Lines<CR>
+" Brazil ws version of :Files
+command! -bang WSFiles call fzf#vim#files('../', <bang>0)
+
 
 " Color scheme choices
-Plugin 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'lifepillar/vim-solarized8'
 
 " QFEnter - open quickfix/loclist items in splits, tabs, etc..
-Plugin 'yssl/QFEnter'
+Plug 'yssl/QFEnter'
 let g:qfenter_keymap = {}
 let g:qfenter_keymap.open = ['<CR>']
 let g:qfenter_keymap.vopen = ['<Leader>v']
 let g:qfenter_keymap.hopen = ['<Leader>h']
 let g:qfenter_keymap.topen = ['<Leader>t']
 
-" vim-grepper : async grep/ag'ing for Vim 8 and NeoVim
-Plugin 'mhinz/vim-grepper'
-let g:grepper           = {}
-let g:grepper.tools     = ['git', 'ag', 'grep']
-let g:grepper.open      = 1
-let g:grepper.jump      = 0
-let g:grepper.next_tool = '<leader>g'
-" The first two mappings open a prompt whereas the last one will search for
-" the word under the cursor right away.
-nnoremap <leader>git :Grepper -tool git -noswitch<cr>
-nnoremap <leader>ag  :Grepper -tool ag  -grepprg ag --vimgrep -G '^.+\.txt'<cr>
-nnoremap <leader>*   :Grepper -tool ag -cword -noprompt<cr>
-nnoremap <leader>f   :Grepper -tool ag -cword -noprompt<cr>
-command! -nargs=* AgFile Grepper -noprompt -tool ag -grepprg ag --vimgrep <args> %
-command! -nargs=* Ag Grepper -noprompt -tool ag -grepprg ag --vimgrep <args>
-
-" Tmux integration
-Plugin 'benmills/vimux'
-
 " ALE
-Plugin 'w0rp/ale'
+Plug 'w0rp/ale'
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
 \   'python': ['flake8', 'mypy'],
+\   'rust': ['rustc', 'rls'],
+\   'java': ['javac', 'checkstyle']
 \}
+let g:ale_sign_column_always = 1
+" go to next or prev error
+nmap <silent> <leader>aj :ALENext<cr>
+nmap <silent> <leader>ak :ALEPrevious<cr>
 
 " vimwiki
-Plugin 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
+let automatic_nested_syntaxes = 1
+let g:vimwiki_url_maxsave=0
+nmap <Leader>tt <Plug>VimwikiToggleListItem
+
+" Better JSON highlighting / folding / linting
+Plug 'elzr/vim-json'
+let g:vim_json_syntax_conceal = 0
+
+" Rust.vim
+" Format rust file :RustFmt
+" Run test under cursor: :RustTest
+Plug 'rust-lang/rust.vim'
+let g:rustfmt_autosave = 0
+
+call plug#end()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Post-plugin options
 "
-" All Plugins must be added before the following line
-call vundle#end()
 
 " Enable filetype detection
 filetype plugin indent on
 
-set ttyfast
-set lazyredraw
-
+" ignore case when all letters are lower case
 set ignorecase smartcase
 
 " Allow backspacing over everything
@@ -162,10 +153,8 @@ set ruler
 set nofoldenable
 
 " Syntax
-if &t_Co > 2 || has("gui_running")
-    syntax enable
-    set hlsearch
-endif
+syntax enable
+set hlsearch
 
 " Spell checking
 if has("spell")
@@ -177,7 +166,8 @@ endif
 set textwidth=78
 
 " Highlight trailing space, and tab characters
-set list lcs=tab:>-,trail:.
+set list
+set listchars=tab:▸·,trail:·
 
 " Completion options
 set wildmode=longest:full,list:full
@@ -185,8 +175,12 @@ set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
 " Colors!
+" set Vim-specific sequences for RGB colors
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" set termguicolors
 set background=dark
-colorscheme solarized
+colorscheme solarized8
 
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
@@ -196,17 +190,19 @@ highlight SignColumn ctermbg=Black
 highlight CursorLine   term=bold cterm=bold guibg=Grey40
 highlight CursorColumn term=bold cterm=bold guibg=Grey40
 
-" Swap files in one place
-set directory=$VIMHOME/swap
-
 " Disable the bell
 set noerrorbells
 set visualbell
 set t_vb=
 
-" Always expand tabs to spaces
-set expandtab
+" Tabs and Indenting
 set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set breakindent
+set autoindent
+set smartindent
+set expandtab
 
 " Row/Column accents
 set nocursorcolumn
@@ -214,11 +210,15 @@ set nocursorline
 set nonumber
 set norelativenumber
 
+" Join spaces: when joining lines or reflowing paragraphs, only use one space
+" to separate sentences, not two
+set nojoinspaces
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TABS
 
-" Tab/buffer navigation via elliott
+" Tab/buffer navigation
 function! Next()
     if tabpagenr('$') > 1
         tabnext
@@ -240,15 +240,6 @@ nnoremap <silent> <C-p> :call Prev()<Cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" macros
-
-" create markdown style header below current line
-let @h = "yypVr"
-" format current selection
-let @q = "{!}fmt"
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NORMAL mode mappings
 
 " Define double <leader> to kill the search highlighting.
@@ -256,10 +247,6 @@ nnoremap <Leader><Leader> :noh<Enter>
 " set cursorline
 nnoremap <Leader>c :set cursorcolumn!<CR>
 nnoremap <Leader>C :set cursorline!<CR>
-" move current line down
-nnoremap - ddp
-" move current line up
-nnoremap <underscore> ddP
 " uppercase the current word, put cursor after last char
 nnoremap <c-u> viwUea
 " edit $VIMRC in a split
@@ -299,7 +286,7 @@ inoremap <Left>  <NOP>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
 
-iabbrev @@ benjaminfjones@gmail.com
+iabbrev @@ bfj@amazon.com
 iabbrev adn and
 iabbrev waht what
 iabbrev tehn then

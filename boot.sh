@@ -20,12 +20,11 @@ echo "dotfiles REPO_DIR = $REPO_DIR"
 # git reset --hard HEAD
 
 # link dotfiles
-MK_DOT="ghci gitconfig tmux.conf vim zsh vim/vimrc zsh/zshrc zsh/zshrc_alias"
+MK_DOT="gitconfig tmux.conf zsh zsh/zshrc zsh/zshrc_alias zsh/zshrc_local"
 
-echo "Linking dotfiles"
+echo "Linking dotfiles..."
 for file in $(echo $MK_DOT)
 do
-
     dest="$HOME/.$(basename $file)"
     if [ -h "$dest" ]; then
         echo "removing symlink $dest"
@@ -35,19 +34,16 @@ do
         mv "$dest" "$dest.OLD"
     fi
 
-    # link the regular version
     src="$REPO_DIR/$file"
+
     echo "linking $src to $dest"
     ln -s "$src" "$dest"
-
 done
 
-echo "Booting vim..."
-pushd $HOME/.vim > /dev/null
-zsh boot.sh
-popd > /dev/null
+echo "Booting neovim..."
+bash "$REPO_DIR/nvim/boot.sh"
 
-echo "Cloning oh-my-zsh"
+echo "Cloning oh-my-zsh..."
 clone_home oh-my-zsh http://github.com/robbyrussell/oh-my-zsh.git
 
 echo
