@@ -101,7 +101,7 @@ export UPDATE_ZSH_DAYS=30
 DISABLE_AUTO_TITLE="true"
 
 # plugins
-plugins=(vi-mode git brew autojump osx ssh-agent z)
+plugins=(vi-mode git brew osx z)
 
 # Oh-My-Zsh addons
 source $ZSH/oh-my-zsh.sh
