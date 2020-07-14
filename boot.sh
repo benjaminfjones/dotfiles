@@ -20,7 +20,7 @@ echo "dotfiles REPO_DIR = $REPO_DIR"
 # git reset --hard HEAD
 
 # link dotfiles
-MK_DOT="gitconfig tmux.conf zsh zsh/zshrc zsh/zshrc_alias alacritty.yml"
+MK_DOT="tmux.conf zsh zsh/zshrc zsh/zshrc_alias alacritty.yml"
 
 echo "Linking dotfiles..."
 for file in $(echo $MK_DOT)
