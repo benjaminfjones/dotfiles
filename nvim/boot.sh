@@ -18,6 +18,7 @@ fi
 
 mkdir -p "$NVIM_DIR"
 ln -s "$BOOT_DIR/init.vim" "$NVIM_DIR/init.vim"
+ln -s "$BOOT_DIR/coc-settings.vim" "$NVIM_DIR/coc-settings.vim"
 ln -s "$BOOT_DIR/spell" "$NVIM_DIR/spell"
 
 # install plugins
