@@ -1,6 +1,6 @@
-" init.vim (neovim)
+" init.vim  -- neovim 0.5+ configuration
 "
-" Author: Benjamin Jones <bfj@amazon.com>
+" Author: Benjamin Jones <benjaminfjones@gmail.com>
 "
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -21,25 +21,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-
-" Vim Lion - quick alignment
-"
-" e.g,
-"     glip=
-"     3gLi(,
-"     glip/-->
-"     <visual>gl=
-"
-Plug 'tommcdo/vim-lion'
-
-" Tabular (better for code formatting)
-Plug 'godlygeek/tabular'
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:\zs<CR>
-vmap <Leader>a: :Tabularize /:\zs<CR>
-nmap <Leader>a, :Tabularize /,<CR>
-vmap <Leader>a, :Tabularize /,<CR>
 
 Plug 'itchyny/lightline.vim'
 set laststatus=2  " enable status line and message line
@@ -82,54 +63,116 @@ nmap <Leader>L :Lines<CR>
 " Brazil ws version of :Files
 command! -bang WSFiles call fzf#vim#files('../', <bang>0)
 
+" wiki
+Plug 'lervag/wiki.vim'
+Plug 'lervag/wiki-ft.vim'
+let g:wiki_root = '~/vimwiki'
 
-" Color scheme choices
+" CoC
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" CoC specific settings
+" runtime coc-settings.vim
+
+" nvim LSP config
+Plug 'neovim/nvim-lspconfig'
+
+
+" Colors scheme plugins
 " Plug 'altercation/vim-colors-solarized'
+" Plug 'luochen1990/rainbow'
+" Plug 'chuling/ci_dark'
 Plug 'lifepillar/vim-solarized8'
 
-" QFEnter - open quickfix/loclist items in splits, tabs, etc..
-Plug 'yssl/QFEnter'
-let g:qfenter_keymap = {}
-let g:qfenter_keymap.open = ['<CR>']
-let g:qfenter_keymap.vopen = ['<Leader>v']
-let g:qfenter_keymap.hopen = ['<Leader>h']
-let g:qfenter_keymap.topen = ['<Leader>t']
+" vim-startify
+Plug 'mhinz/vim-startify'
 
-" ALE
-Plug 'w0rp/ale'
-let g:ale_linters_explicit = 1
-let g:ale_linters = {
-\   'python': ['flake8', 'mypy'],
-\   'rust': ['rustc', 'rls'],
-\   'java': ['javac', 'checkstyle']
-\}
-let g:ale_sign_column_always = 1
-" go to next or prev error
-nmap <silent> <leader>aj :ALENext<cr>
-nmap <silent> <leader>ak :ALEPrevious<cr>
+" nvim-treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
-" vimwiki
-Plug 'vimwiki/vimwiki'
-let automatic_nested_syntaxes = 1
-let g:vimwiki_url_maxsave=0
-nmap <Leader>tt <Plug>VimwikiToggleListItem
-
-" Better JSON highlighting / folding / linting
-Plug 'elzr/vim-json'
-let g:vim_json_syntax_conceal = 0
-
-" Rust.vim
-" Format rust file :RustFmt
-" Run test under cursor: :RustTest
-Plug 'rust-lang/rust.vim'
-let g:rustfmt_autosave = 0
 
 call plug#end()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Runtime plugin setup
+"
+
+" nvim-lspconfig setup
+lua << EOF
+require'lspconfig'.pyright.setup{}
+
+-- see https://github.com/neovim/nvim-lspconfig#Keybindings-and-completion
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  -- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  -- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  -- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  -- buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+-- local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
+local servers = { 'pyright' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+EOF
+
+" nvim-treesitter setup
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "bash", "json", "python", "rust" }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  -- ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    -- disable = { "c", "rust" },  -- list of language that will be disabled
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Post-plugin options
 "
+
+
 
 " Enable filetype detection
 filetype plugin indent on
@@ -174,13 +217,11 @@ set wildmode=longest:full,list:full
 set wildmenu
 set wildignore=*.o,*.hi,*.swp,*.bc
 
-" Colors!
-" set Vim-specific sequences for RGB colors
-" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" set termguicolors
-set background=dark
+syntax on
+set termguicolors
 colorscheme solarized8
+
+set fillchars+=vert:│
 
 " reset highlighting
 highlight Normal cterm=NONE ctermbg=NONE
@@ -262,7 +303,8 @@ set pastetoggle=<F2>
 nnoremap <F3> :set spell!<CR>
 " remove trailing whitespace
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-
+" insert timestamp
+nnoremap <Leader>tt i<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " INSERT mode mappings
@@ -286,7 +328,6 @@ inoremap <Left>  <NOP>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Abbreviations
 
-iabbrev @@ bfj@amazon.com
 iabbrev adn and
 iabbrev waht what
 iabbrev tehn then
