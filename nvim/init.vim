@@ -63,6 +63,16 @@ nmap <Leader>L :Lines<CR>
 " Brazil ws version of :Files
 command! -bang WSFiles call fzf#vim#files('../', <bang>0)
 
+" telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
 " wiki
 Plug 'lervag/wiki.vim'
 Plug 'lervag/wiki-ft.vim'
