@@ -61,24 +61,6 @@ unsetopt correct_all
 
 
 ############################################################
-# Platform Specific Config
-
-# load in local config, if available
-DARWIN=`uname -a | grep Darwin`
-if [ -z $DARWIN ]; then
-  echo Loading linux configuration
-  if [[ -f ~/.zsh/linux-config ]]; then
-    . ~/.zsh/linux-config
-  fi
-else
-  echo Loading OS X configuration
-  if [[ -f ~/.zsh/osx-config ]]; then
-    . ~/.zsh/osx-config
-  fi
-fi
-
-
-############################################################
 # OH _ MY _ ZSH
 
 # Path to your oh-my-zsh configuration.
@@ -101,7 +83,7 @@ export UPDATE_ZSH_DAYS=30
 DISABLE_AUTO_TITLE="true"
 
 # plugins
-plugins=(vi-mode git brew osx z)
+plugins=(vi-mode git brew macos z asdf)
 
 # Oh-My-Zsh addons
 source $ZSH/oh-my-zsh.sh
