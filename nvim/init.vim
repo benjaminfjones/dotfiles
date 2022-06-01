@@ -100,6 +100,14 @@ let g:startify_change_to_vcs_root = 0
 " nvim-treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
+" Rustfmt support
+Plug 'rust-lang/rust.vim'
+
+" ALE for extra linting and auto-formatting
+Plug 'dense-analysis/ale'
+let g:ale_fixers = {'rust': ['rustfmt']}
+let g:ale_fix_on_save = 1
+
 
 call plug#end()
 
