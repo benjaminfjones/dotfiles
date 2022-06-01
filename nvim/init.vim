@@ -95,6 +95,7 @@ Plug 'lifepillar/vim-solarized8'
 
 " vim-startify
 Plug 'mhinz/vim-startify'
+let g:startify_change_to_vcs_root = 0
 
 " nvim-treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
