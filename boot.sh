@@ -40,8 +40,9 @@ do
     ln -s "$src" "$dest"
 done
 
-echo "Booting neovim..."
-bash "$REPO_DIR/nvim/boot.sh"
+# Neovim config now tracked at: https://github.com/benjaminfjones/kickstart.nvim
+# echo "Booting neovim..."
+# bash "$REPO_DIR/nvim/boot.sh"
 
 echo "Cloning oh-my-zsh..."
 clone_home oh-my-zsh http://github.com/robbyrussell/oh-my-zsh.git
