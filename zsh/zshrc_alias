@@ -12,18 +12,10 @@ else
     MY_ALIASES_LOADED="yes"
     echo "Loading aliases..."
 
-    alias l.='ls -la .'
-    alias ll='ls -l'
-    alias la='ls -la'
-
-    RM=$(which rm)
-    alias rmq="$RM"    # quiet
-    alias rm="$RM -v"  # loud
-
-    topit() { /usr/bin/top -p `pgrep $1` }
-    vimfind() { find -name $1 -exec vim -p {} + }
-    alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-    alias fn='find . -name $@'
+    alias l='eza'
+    alias ls='eza'
+    alias la='eza -a'
+    alias ll='eza -lah'
 
     # Vim
     VIM=$(which nvim)
@@ -34,35 +26,12 @@ else
     alias gcm='git commit -m'
     alias gits='git status'
 
-    # Haskell
-    alias csi="cabal sandbox init"
-    alias csd="cabal sandbox delete"
-    alias ghc-sandbox="ghc -no-user-package-db \
-                           -package-db .cabal-sandbox/*-packages.conf.d"
-    alias ghci-sandbox="ghci -no-user-package-db \
-                             -package-db .cabal-sandbox/*-packages.conf.d"
-    alias runhaskell-sandbox="runhaskell -no-user-package-db \
-                                         -package-db .cabal-sandbox/*-packages.conf.d"
-    alias hask="hasktags -c ."
-
     ## python
     alias py='python'
-    alias ipy='ipython'
-    alias pyserve='python -m SimpleHTTPServer'
+    alias pyserve='python -m http.server'
 
-
-    ## Colorized man
-
-    man() {
-        env \
-            LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-            LESS_TERMCAP_md=$(printf "\e[1;31m") \
-            LESS_TERMCAP_me=$(printf "\e[0m") \
-            LESS_TERMCAP_se=$(printf "\e[0m") \
-            LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-            LESS_TERMCAP_ue=$(printf "\e[0m") \
-            LESS_TERMCAP_us=$(printf "\e[1;32m") \
-                man "$@"
-    }
+    ## Amazon
+    alias mw="mwinit -f"
+    alias y='autossh -M 2000 sudachi'
 
 fi
