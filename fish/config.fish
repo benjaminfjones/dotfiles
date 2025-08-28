@@ -1,7 +1,15 @@
 if status is-interactive
     fish_vi_key_bindings
 
-    set -gx AWS_PROFILE bfj
+    # PATH additions
+    fish_add_path $HOME/.toolbox/bin
+    fish_add_path $HOME/.local/bin
+    fish_add_path $HOME/.elan/bin
+
+    # Set up mise for runtime management
+    if test -x "/opt/homebrew/bin/mise"; or test -x "$HOME/.local/bin/mise"
+        mise activate fish | source
+    end
 
     if test -d "/opt/homebrew"
         # Homebrew setup
@@ -13,5 +21,7 @@ if status is-interactive
             source "/opt/homebrew/opt/nvm/nvm.sh"
         end
     end
+
+    set -gx AWS_PROFILE bfj
 
 end

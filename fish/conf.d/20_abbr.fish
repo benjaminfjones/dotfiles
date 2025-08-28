@@ -11,7 +11,7 @@ if status is-interactive
     abbr -a gits git status
     abbr -a gcm git commit -m
 
-    abbr -a mw mwinit -f
+    abbr -a mw mwinit -f -s
     abbr -a c autossh -M 2010 bfj-cdm
     abbr -a y autossh -M 2020 yukou
 
