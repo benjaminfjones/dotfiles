@@ -55,7 +55,7 @@ if [[ $TERM != "dumb" ]] ; then
   zstyle -e ':completion:*:default' list-colors 'reply=("${(@s.:.)LS_COLORS}")'
 fi
 
-if [[ $TERM == "xterm" ]] ; then
+if [[ $TERM == "xterm" || $TERM == "xterm-ghostty" ]] ; then
   export TERM="xterm-256color"
 fi
 
